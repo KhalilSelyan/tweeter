@@ -11,6 +11,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { IoImageOutline } from "react-icons/io5";
 import LoadingSpinner from "~/components/loading";
+import NavButtons from "~/components/navbuttons";
 
 const Feed = () => {
   const { isSignedIn } = useUser();
@@ -60,6 +61,10 @@ const Home: NextPage = () => {
         <div className="flex flex-col gap-y-2 border-slate-400 px-4 py-2">
           <Twitbox />
           <Feed />
+        </div>
+        {/* push all the way down and keep there even on scroll */}
+        <div className="fixed bottom-0 left-0 w-full">
+          <NavButtons />
         </div>
       </main>
     </>
