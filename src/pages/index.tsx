@@ -1,6 +1,5 @@
 import { useUser } from "@clerk/nextjs";
 import { type NextPage } from "next";
-import Head from "next/head";
 import { RouterOutputs, api } from "~/utils/api";
 import Twitbox from "~/components/twitbox";
 import { format } from "date-fns";
@@ -11,8 +10,8 @@ import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { IoImageOutline } from "react-icons/io5";
 import LoadingSpinner from "~/components/loading";
 import NavButtons from "~/components/navbuttons";
-import Uploader from "~/components/uploader";
 import Link from "next/link";
+import Head from "next/head";
 
 export const Feed = () => {
   const { isSignedIn } = useUser();
@@ -52,6 +51,9 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>Home / TwitClone</title>
+      </Head>
       <main className="flex flex-col gap-y-2">
         <div className="flex flex-col gap-y-2 border-slate-400 px-4 pt-16">
           {/* <Uploader /> */}
@@ -87,10 +89,12 @@ export const PostView = (props: PostWithUser) => {
           <Link href={`/@${author.username}`}>
             <span>@{author.username}</span>
           </Link>
-          <span className="text-slate-400">
-            {format(post.createdAt, "d MMMM")} at{" "}
-            {format(post.createdAt, "HH:mm")}
-          </span>
+          <Link href={`/post/${post.id}`}>
+            <span className="text-slate-400">
+              {format(post.createdAt, "d MMMM")} at{" "}
+              {format(post.createdAt, "HH:mm")}
+            </span>
+          </Link>
         </div>
       </div>
       <span className="px-4 py-2">{post.content}</span>
