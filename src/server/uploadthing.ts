@@ -27,6 +27,11 @@ export const ourFileRouter = {
       console.log("Upload complete for userId:", metadata.userId);
 
       console.log("file url", file.url);
+
+      // You can return whatever you like here, it will be sent to the client
+      // await the url to be generated
+
+      // return { url: file.url };
     }),
 } satisfies FileRouter;
 

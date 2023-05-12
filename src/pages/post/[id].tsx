@@ -12,9 +12,8 @@ import { IoImageOutline } from "react-icons/io5";
 import LoadingSpinner from "~/components/loading";
 import NavButtons from "~/components/navbuttons";
 import Uploader from "~/components/uploader";
-import Link from "next/link";
 
-export const Feed = () => {
+const Feed = () => {
   const { isSignedIn } = useUser();
 
   const { data, isLoading: postsLoading } = api.posts.getAll.useQuery();
@@ -75,7 +74,7 @@ const Home: NextPage = () => {
 export default Home;
 
 type PostWithUser = RouterOutputs["posts"]["getAll"][number];
-export const PostView = (props: PostWithUser) => {
+const PostView = (props: PostWithUser) => {
   const { post, author } = props;
   const { user } = useUser();
   return (
@@ -87,9 +86,7 @@ export const PostView = (props: PostWithUser) => {
           className="h-10 w-10 rounded-xl"
         />
         <div className="flex flex-col text-sm ">
-          <Link href={`/@${author.username}`}>
-            <span>{author?.name}</span>
-          </Link>
+          <span>{author?.name}</span>
           <span className="text-slate-400">
             {format(post.createdAt, "d MMMM")} at{" "}
             {format(post.createdAt, "HH:mm")}
@@ -97,9 +94,6 @@ export const PostView = (props: PostWithUser) => {
         </div>
       </div>
       <span className="px-4 py-2">{post.content}</span>
-      {post.image && (
-        <img src={post.image} alt="" className="rounded-xl" width="100%" />
-      )}
       <div className="flex items-center justify-end gap-x-2 px-4 text-xs text-slate-400">
         <span>12 likes</span>
         <span>11 comments</span>

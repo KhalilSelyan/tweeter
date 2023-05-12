@@ -22,7 +22,12 @@ const config = {
     esmExternals: false,
   },
   images: {
-    domains: ["images.clerk.dev"],
+    domains: [
+      "images.clerk.dev",
+      "images.unsplash.com",
+      "i.imgur.com",
+      "i.pinimg.com",
+    ],
   },
 };
 export default config;

@@ -65,6 +65,7 @@ export const postsRouter = createTRPCRouter({
           .string()
           .min(1, "Post must be at least 1 character long")
           .max(280, "Post must be at most 280 characters long"),
+        image: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -79,6 +80,7 @@ export const postsRouter = createTRPCRouter({
         data: {
           authorId,
           content: input.content,
+          image: input.image ?? "",
         },
       });
 
