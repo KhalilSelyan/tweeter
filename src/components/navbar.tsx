@@ -6,7 +6,9 @@ const Navbar = () => {
   const profilePicture = userData.user?.profileImageUrl;
 
   return (
-    <div className={`flex h-14 w-full justify-between bg-white px-4 py-2`}>
+    <div
+      className={`fixed left-0 top-0 flex h-14 w-full justify-between bg-white px-4 py-2`}
+    >
       <div>
         <Image
           priority

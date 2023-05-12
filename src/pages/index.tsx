@@ -32,7 +32,7 @@ const Feed = () => {
       </div>
     );
   return (
-    <div>
+    <div className="flex flex-col gap-y-2 pb-20">
       {isSignedIn &&
         data.map(({ post, author }) => (
           <PostView key={post.id} post={post} author={author} />
@@ -58,7 +58,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex flex-col gap-y-2">
         <Navbar />
-        <div className="flex flex-col gap-y-2 border-slate-400 px-4 py-2">
+        <div className="flex flex-col gap-y-2 border-slate-400 px-4 pt-16">
           <Twitbox />
           <Feed />
         </div>
@@ -79,7 +79,7 @@ const PostView = (props: PostWithUser) => {
   const { user } = useUser();
   return (
     <div className="flex flex-col justify-center gap-y-2 rounded-xl border-2 border-gray-200 bg-white">
-      <div className="flex items-center p-4">
+      <div className="flex items-center gap-x-2 p-4">
         <img
           src={author.profileImageUrl}
           alt=""
