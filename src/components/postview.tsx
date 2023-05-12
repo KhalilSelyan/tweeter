@@ -39,9 +39,9 @@ export const PostView = (props: PostWithUser) => {
         <img src={post.image} alt="" className="rounded-xl" width="100%" />
       )}
       <div className="flex items-center justify-end gap-x-2 px-4 text-xs text-slate-400">
-        <span>12 likes</span>
-        <span>11 comments</span>
-        <span>4 shares</span>
+        <span>0 likes</span>
+        <span>0 comments</span>
+        <span>0 shares</span>
       </div>
       <hr />
       {/* icons container */}
