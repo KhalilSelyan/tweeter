@@ -12,6 +12,7 @@ import { BsBookmark, BsFillBookmarkFill } from "react-icons/bs";
 import { IoImageOutline } from "react-icons/io5";
 import LoadingSpinner from "~/components/loading";
 import NavButtons from "~/components/navbuttons";
+import Uploader from "~/components/uploader";
 
 const Feed = () => {
   const { isSignedIn } = useUser();
@@ -59,6 +60,7 @@ const Home: NextPage = () => {
       <main className="flex flex-col gap-y-2">
         <Navbar />
         <div className="flex flex-col gap-y-2 border-slate-400 px-4 pt-16">
+          {/* <Uploader /> */}
           <Twitbox />
           <Feed />
         </div>

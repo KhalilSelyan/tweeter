@@ -1,5 +1,6 @@
 import { useUser } from "@clerk/nextjs";
 import React from "react";
+import { toast } from "react-hot-toast";
 import { BiWorld } from "react-icons/bi";
 import { IoImageOutline } from "react-icons/io5";
 import { api } from "~/utils/api";
@@ -13,6 +14,11 @@ const Twitbox = () => {
       if (!textAreaRef.current) return;
       textAreaRef.current.value = "";
       void ctx.posts.getAll.invalidate();
+    },
+    onError: (err) => {
+      const error = err.data?.zodError?.fieldErrors.content;
+      if (error && error[0]) toast.error(error[0]);
+      else toast.error("Something went wrong, please try again later");
     },
   });
 
@@ -39,6 +45,15 @@ const Twitbox = () => {
             ref={textAreaRef}
             placeholder="What's happening?"
             className="bg-transparent px-4 text-black outline-none"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                if (!textAreaRef.current) return;
+                mutate({
+                  content: textAreaRef.current?.value,
+                });
+              }
+            }}
           />
         </form>
       </div>

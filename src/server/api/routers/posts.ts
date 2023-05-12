@@ -61,7 +61,10 @@ export const postsRouter = createTRPCRouter({
   create: privateProcedure
     .input(
       z.object({
-        content: z.string().min(1).max(280),
+        content: z
+          .string()
+          .min(1, "Post must be at least 1 character long")
+          .max(280, "Post must be at most 280 characters long"),
       })
     )
     .mutation(async ({ ctx, input }) => {
