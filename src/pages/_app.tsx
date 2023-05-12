@@ -6,10 +6,14 @@ import "~/styles/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 import Navbar from "~/components/navbar";
+import Head from "next/head";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <ClerkProvider {...pageProps}>
+      <Head>
+        <title>Tweeter Clone</title>
+      </Head>
       <Toaster position="bottom-center" />
       <Navbar />
       <Component {...pageProps} />
