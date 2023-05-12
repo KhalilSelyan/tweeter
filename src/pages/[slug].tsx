@@ -5,9 +5,27 @@ import NavButtons from "~/components/navbuttons";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { useState } from "react";
 import { TbRefresh } from "react-icons/tb";
-import { Feed } from ".";
 import Head from "next/head";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
+import LoadingSpinner from "~/components/loading";
+import { PostView } from "~/components/postview";
+
+const ProfileFeed = (props: { userId: string }) => {
+  const { data, isLoading } = api.posts.getPostsByUserId.useQuery({
+    userId: props.userId,
+  });
+
+  if (isLoading) return <LoadingSpinner />;
+  if (!data || data.length === 0) return <div>No posts here...</div>;
+
+  return (
+    <div className="flex flex-col gap-y-2 pb-20">
+      {data.map(({ post, author }) => (
+        <PostView key={post.id} post={post} author={author} />
+      ))}
+    </div>
+  );
+};
 
 const Home: NextPage<{
   userName: string;
@@ -24,7 +42,7 @@ const Home: NextPage<{
 
   if (!data) return <div>Something went wrong...</div>;
 
-  if (!userLoaded) return <div />;
+  if (!userLoaded || !user) return <div />;
 
   return (
     <>
@@ -42,11 +60,16 @@ const Home: NextPage<{
           {/* profile box */}
           <div className="relative mx-4 -mt-4 flex h-64 flex-col items-center justify-center gap-y-2 rounded-xl bg-white pt-16">
             <img
-              src={user?.profileImageUrl}
+              src={data.profileImageUrl}
               alt="Picture of the author"
               className="absolute -top-16 left-0 right-0 m-auto aspect-square h-32 w-32 rounded-xl border-2 border-white object-cover  md:h-96"
             />
-            <h1 className="text-2xl font-bold">{user?.fullName}</h1>
+            <div className="flex flex-col items-center">
+              <h1 className="text-2xl font-bold">{data.name}</h1>
+              <h1 className="text-sm font-medium text-gray-400">
+                @{data.username}
+              </h1>
+            </div>
             <div className="flex w-full justify-evenly">
               <div className="flex gap-x-1 text-sm text-gray-500">
                 <span className="font-bold text-black">2,569</span>Following
@@ -131,7 +154,7 @@ const Home: NextPage<{
           </div>
         </div>
         <div className="px-4">
-          <Feed />
+          <ProfileFeed userId={data.id} />
         </div>
 
         {/* push all the way down and keep there even on scroll */}
