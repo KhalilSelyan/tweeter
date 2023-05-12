@@ -18,6 +18,9 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  experimental: {
+    esmExternals: false,
+  },
   images: {
     domains: ["images.clerk.dev"],
   },
