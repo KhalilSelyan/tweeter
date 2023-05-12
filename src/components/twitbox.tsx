@@ -113,12 +113,7 @@ const Twitbox = () => {
               htmlFor="button2"
               className="cursor-pointer items-center"
             >
-              <IoImageOutline
-                onClick={() => {
-                  toast.error("This feature is not available yet");
-                }}
-                className="relative h-6 w-6"
-              />
+              <IoImageOutline className="relative h-6 w-6" />
             </label>
             <input
               hidden
