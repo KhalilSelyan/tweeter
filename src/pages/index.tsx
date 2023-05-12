@@ -85,7 +85,7 @@ export const PostView = (props: PostWithUser) => {
         </Link>
         <div className="flex flex-col text-sm ">
           <Link href={`/@${author.username}`}>
-            <span>{author?.name}</span>
+            <span>@{author.username}</span>
           </Link>
           <span className="text-slate-400">
             {format(post.createdAt, "d MMMM")} at{" "}

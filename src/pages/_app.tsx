@@ -13,6 +13,8 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     <ClerkProvider {...pageProps}>
       <Head>
         <title>Tweeter Clone</title>
+        <meta name="description" content="A clone of Twitter" />
+        <link rel="icon" href="/tweeter-small.svg" />
       </Head>
       <Toaster position="bottom-center" />
       <Navbar />
