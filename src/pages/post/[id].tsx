@@ -1,28 +1,43 @@
 import { useUser } from "@clerk/nextjs";
-import { type NextPage } from "next";
+import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { api } from "~/utils/api";
 import NavButtons from "~/components/navbuttons";
 import Head from "next/head";
+import { generateSSGHelper } from "~/server/helpers/ssgHelper";
+import LoadingSpinner from "~/components/loading";
+import { PostView } from "~/components/postview";
 
-const Home: NextPage = () => {
-  const { isLoaded: userLoaded } = useUser();
+const Post: NextPage<{
+  id: string;
+}> = ({ id }) => {
+  const { data, isLoading } = api.posts.getById.useQuery({
+    id,
+  });
+  const { isLoaded: userLoaded, user } = useUser();
 
-  // Start fetching asap
-  api.posts.getAll.useQuery();
+  if (!data) return <div>Something went wrong...</div>;
 
-  if (!userLoaded) return <div />;
+  if (!userLoaded || !user) return <div />;
+
+  if (isLoading) return <LoadingSpinner />;
+  if (!data) return <div>No posts here...</div>;
 
   return (
     <>
       <Head>
-        <title>Post / TwitClone</title>
+        <title>@{data.author.username} | Profile </title>
       </Head>
-      <main className="flex flex-col gap-y-2">
-        <div className="flex flex-col gap-y-2 border-slate-400 px-4 pt-16">
-          <div>Post View</div>
+      <main className="flex flex-col pt-16">
+        <div className="flex flex-col gap-y-2 pb-20">
+          <PostView
+            key={data.author.id}
+            post={data.post}
+            author={data.author}
+          />
         </div>
+
         {/* push all the way down and keep there even on scroll */}
-        <div className="fixed bottom-0 left-0 w-full">
+        <div className="fixed bottom-0 left-0 w-full md:hidden">
           <NavButtons />
         </div>
       </main>
@@ -30,4 +45,27 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export const getStaticProps: GetStaticProps = async (context) => {
+  const ssg = generateSSGHelper();
+
+  const id = context.params?.id;
+
+  if (typeof id !== "string") throw new Error("no id");
+
+  await ssg.posts.getById.prefetch({ id });
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+      id,
+    },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};
+
+export default Post;
