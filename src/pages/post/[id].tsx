@@ -25,7 +25,7 @@ const Post: NextPage<{
   return (
     <>
       <Head>
-        <title>@{data.author.username} | Profile </title>
+        <title>@{data.author.username} | Post </title>
       </Head>
       <main className="flex flex-col pt-16">
         <div className="flex flex-col gap-y-2 pb-20">
