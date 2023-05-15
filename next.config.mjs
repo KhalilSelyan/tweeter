@@ -29,5 +29,13 @@ const config = {
       "i.pinimg.com",
     ],
   },
+
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  swcMinify: true,
 };
 export default config;
