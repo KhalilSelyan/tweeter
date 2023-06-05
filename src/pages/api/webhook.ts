@@ -3,7 +3,7 @@ import { prisma } from "../../server/db";
 import { Clerk } from "@clerk/clerk-sdk-node";
 import { env } from "~/env.mjs";
 
-const clerk = Clerk({ apiKey: env.CLERK_API_KEY });
+const clerk = Clerk({ apiKey: env.NEXT_PUBLIC_CLERK_API_KEY });
 
 export default async function dan(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {

@@ -9,7 +9,6 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     NODE_ENV: z.enum(["development", "test", "production"]),
-    CLERK_API_KEY: z.string().min(1),
   },
 
   /**
@@ -18,6 +17,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
+    NEXT_PUBLIC_CLERK_API_KEY: z.string().min(1),
     NEXT_PUBLIC_WEB3_STORAGE_API_KEY: z.string().min(1),
     // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
   },
@@ -27,7 +27,7 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    CLERK_API_KEY: process.env.CLERK_API_KEY,
+    NEXT_PUBLIC_CLERK_API_KEY: process.env.CLERK_API_KEY,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_WEB3_STORAGE_API_KEY:
