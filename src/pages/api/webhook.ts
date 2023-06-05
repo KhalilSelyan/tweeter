@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../db";
+import { prisma } from "../../server/db";
 import { Clerk } from "@clerk/backend";
 
 const clerk = Clerk({ apiKey: process.env.CLERK_API_KEY });
