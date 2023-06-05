@@ -44,11 +44,13 @@ const Home: NextPage<{
   });
   const [isOpen, setIsOpen] = useState(false);
   const bioRef = useRef<HTMLTextAreaElement>(null);
-
+  const ctx = api.useContext();
   const { mutate } = api.profile.updateBio.useMutation({
     onSuccess: () => {
       if (!bioRef.current) return;
       bioRef.current.value = "";
+      setIsOpen(false);
+      void ctx.profile.getUserByUserName.invalidate();
     },
     onError: (err) => {
       const error = err.data?.zodError?.fieldErrors.content;
