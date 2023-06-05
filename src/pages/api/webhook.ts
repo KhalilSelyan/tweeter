@@ -24,7 +24,7 @@ export default async function dan(req: NextApiRequest, res: NextApiResponse) {
         data: {
           // You'll need to adjust this depending on your database schema
           id: user.id,
-          bio: (user.publicMetadata?.bio as string) ?? "",
+          bio: "",
           createdAt: new Date(user.createdAt),
         },
       });

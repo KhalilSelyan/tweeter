@@ -2,7 +2,11 @@ import { clerkClient } from "@clerk/nextjs/server";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  privateProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { filterUserForClient } from "~/server/helpers/filterUserForClient";
 
 export const profileRouter = createTRPCRouter({
@@ -12,16 +16,43 @@ export const profileRouter = createTRPCRouter({
         userName: z.string(),
       })
     )
-    .query(async ({ input }) => {
+    .query(async ({ ctx, input }) => {
       const [user] = await clerkClient.users.getUserList({
         username: [input.userName],
       });
+
       if (!user) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "User not found",
         });
       }
-      return filterUserForClient(user);
+      const bio = await ctx.prisma.user.findUnique({
+        where: {
+          id: user.id,
+        },
+        select: {
+          bio: true,
+        },
+      });
+
+      return { ...filterUserForClient(user), bio };
+    }),
+  updateBio: privateProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        bio: z.string().max(255),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const user = await ctx.prisma.user.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          bio: input.bio,
+        },
+      });
     }),
 });

@@ -4,12 +4,14 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { api } from "~/utils/api";
 import NavButtons from "~/components/navbuttons";
 import { IoPersonAddSharp } from "react-icons/io5";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { TbRefresh } from "react-icons/tb";
 import Head from "next/head";
 import { generateSSGHelper } from "~/server/helpers/ssgHelper";
 import LoadingSpinner from "~/components/loading";
 import { PostView } from "~/components/postview";
+import { AiFillEdit } from "react-icons/ai";
+import { toast } from "react-hot-toast";
 
 const ProfileFeed = (props: { userId: string }) => {
   const { data, isLoading } = api.posts.getPostsByUserId.useQuery({
@@ -39,6 +41,20 @@ const Home: NextPage<{
 
   const { data } = api.profile.getUserByUserName.useQuery({
     userName,
+  });
+  const [isOpen, setIsOpen] = useState(false);
+  const bioRef = useRef<HTMLTextAreaElement>(null);
+
+  const { mutate } = api.profile.updateBio.useMutation({
+    onSuccess: () => {
+      if (!bioRef.current) return;
+      bioRef.current.value = "";
+    },
+    onError: (err) => {
+      const error = err.data?.zodError?.fieldErrors.content;
+      if (error && error[0]) toast.error(error[0]);
+      else toast.error("Something went wrong, please try again later");
+    },
   });
 
   if (!data) return <div>Something went wrong...</div>;
@@ -79,8 +95,88 @@ const Home: NextPage<{
                 <span className="font-bold text-black">10.8k</span>Followers
               </div>
             </div>
+            <AiFillEdit
+              onClick={() => {
+                setIsOpen(true);
+              }}
+            />
+            <dialog
+              open={isOpen}
+              role="dialog"
+              className="fixed inset-0 z-10 overflow-y-auto bg-transparent"
+              aria-labelledby="modal-title"
+              aria-describedby="modal-description"
+            >
+              <div className="flex items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
+                <div
+                  className="fixed inset-0 transition-opacity"
+                  aria-hidden="true"
+                >
+                  <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+
+                {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
+                <span
+                  className="hidden sm:inline-block sm:h-screen sm:align-middle"
+                  aria-hidden="true"
+                >
+                  &#8203;
+                </span>
+                <div
+                  className="inline-block transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:align-middle"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="modal-headline"
+                >
+                  <div className=" px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                    <div className="sm:flex sm:items-start">
+                      <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                        <h3
+                          className="text-lg font-medium leading-6 text-gray-900"
+                          id="modal-headline"
+                        >
+                          Edit Bio
+                        </h3>
+                        <div className="mt-2">
+                          <textarea
+                            ref={bioRef}
+                            className="block w-full rounded-md border border-gray-300 shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Bio"
+                            defaultValue={data.bio?.bio}
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                    <button
+                      type="button"
+                      className="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                      onClick={() => {
+                        if (!bioRef.current) return;
+                        mutate({
+                          id: data.id,
+                          bio: bioRef.current.value,
+                        });
+                      }}
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:mt-0 sm:w-auto sm:text-sm"
+                      onClick={() => {
+                        setIsOpen(false);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </dialog>
             <div className="text-center text-lg text-gray-500">
-              Photographer & Filmmaker based in Copenhagen, Denmark ✵ 🇩🇰
+              Bio: {data.bio?.bio}
             </div>
             <div className="flex items-center rounded-md bg-blue-500 px-4 py-1 text-sm text-white">
               <IoPersonAddSharp className="mr-2 inline-block" />
