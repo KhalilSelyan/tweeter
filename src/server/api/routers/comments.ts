@@ -1,4 +1,3 @@
-import type { User } from "@clerk/nextjs/dist/api";
 import { clerkClient } from "@clerk/nextjs/server";
 import { Post } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
@@ -48,38 +47,13 @@ const rateLimiter = new Ratelimit({
   analytics: true,
 });
 
-export const postsRouter = createTRPCRouter({
+export const commentsRouter = createTRPCRouter({
   getById: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       const post = await ctx.prisma.post.findUnique({
         where: {
           id: input.id,
-        },
-        select: {
-          _count: {
-            select: {
-              comments: true,
-              liked: true,
-            },
-          },
-
-          id: true,
-          content: true,
-          image: true,
-          createdAt: true,
-          authorId: true,
-          comments: {
-            take: 2,
-            // skip: page * 2,
-            select: {
-              id: true,
-              content: true,
-              image: true,
-              createdAt: true,
-              authorId: true,
-            },
-          },
         },
       });
 
@@ -106,31 +80,6 @@ export const postsRouter = createTRPCRouter({
       orderBy: {
         createdAt: "desc",
       },
-      select: {
-        _count: {
-          select: {
-            comments: true,
-            liked: true,
-          },
-        },
-        user: false,
-        id: true,
-        content: true,
-        image: true,
-        createdAt: true,
-        authorId: true,
-        comments: {
-          take: 2,
-          // skip: page * 2,
-          select: {
-            id: true,
-            content: true,
-            image: true,
-            createdAt: true,
-            authorId: true,
-          },
-        },
-      },
     });
     return addUserDataToPosts(posts);
   }),
@@ -150,28 +99,6 @@ export const postsRouter = createTRPCRouter({
           orderBy: {
             createdAt: "desc",
           },
-          select: {
-            _count: {
-              select: {
-                comments: true,
-                liked: true,
-              },
-            },
-            id: true,
-            content: true,
-            image: true,
-            createdAt: true,
-            authorId: true,
-            comments: {
-              select: {
-                id: true,
-                content: true,
-                image: true,
-                createdAt: true,
-                authorId: true,
-              },
-            },
-          },
         })
         .then(addUserDataToPosts);
       return posts;
@@ -184,6 +111,8 @@ export const postsRouter = createTRPCRouter({
           .min(1, "Post must be at least 1 character long")
           .max(280, "Post must be at most 280 characters long"),
         image: z.string().optional(),
+        postId: z.string(),
+        userId: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -194,14 +123,15 @@ export const postsRouter = createTRPCRouter({
         throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
       }
 
-      const post = await ctx.prisma.post.create({
+      const comment = await ctx.prisma.comment.create({
         data: {
           authorId,
           content: input.content,
           image: input.image ?? "",
+          postId: input.postId,
         },
       });
 
-      return post;
+      return comment;
     }),
 });

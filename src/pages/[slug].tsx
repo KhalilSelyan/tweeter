@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useUser } from "@clerk/nextjs";
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { api } from "~/utils/api";

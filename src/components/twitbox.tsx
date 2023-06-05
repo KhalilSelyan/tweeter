@@ -4,7 +4,6 @@ import { toast } from "react-hot-toast";
 import { BiWorld } from "react-icons/bi";
 import { IoImageOutline } from "react-icons/io5";
 import { api } from "~/utils/api";
-import Upload from "./uploader";
 import { Web3Storage } from "web3.storage";
 import { env } from "~/env.mjs";
 
@@ -131,7 +130,6 @@ const Twitbox = () => {
               {uploading ? "Uploading..." : "Upload"}
             </button>
           </form>
-          <div></div>
           <BiWorld className="h-6 w-6 " />
           <span>Everyone can reply</span>
         </div>

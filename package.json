@@ -11,6 +11,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@clerk/backend": "^0.20.1",
+    "@clerk/clerk-sdk-node": "^4.10.2",
     "@clerk/nextjs": "^4.16.4",
     "@prisma/client": "^4.13.0",
     "@t3-oss/env-nextjs": "^0.2.1",

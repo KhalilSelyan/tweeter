@@ -1,4 +1,4 @@
-import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import { SignIn, SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -24,8 +24,9 @@ const Navbar = () => {
             className="aspect-square h-10 w-10 rounded-xl"
           />
         </Link>
-        {/* <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" /> */}
       </div>
+      <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
+
       {!userData.isSignedIn ? (
         <SignInButton>
           <button className="rounded-md bg-[#2e026d] px-4 py-2 text-white">

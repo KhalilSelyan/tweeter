@@ -1,24 +1,62 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
+model User {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  bio       String    @db.VarChar(255)
+  posts     Post[]
+  comments  Comment[]
+  liked     Liked[]
+}
 
 model Post {
-  id      String   @id @default(cuid())
-  createdAt DateTime @default(now())
-
-  content String @db.VarChar(255)
-  image   String @db.VarChar(255)
-  authorId String
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  content   String    @db.VarChar(255)
+  image     String    @db.VarChar(255)
+  authorId  String
+  user      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  liked     Liked[]
+  comments  Comment[]
 
   @@index([authorId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  content   String   @db.VarChar(255)
+  image     String   @db.VarChar(255)
+  authorId  String
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  liked     Liked[]
+
+  @@index([postId])
+  @@index([authorId])
+}
+
+model Liked {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  postId    String
+  commentId String
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+  @@index([userId])
+  @@index([commentId])
 }
