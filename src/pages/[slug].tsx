@@ -13,7 +13,7 @@ import { PostView } from "~/components/postview";
 import { AiFillEdit } from "react-icons/ai";
 import { toast } from "react-hot-toast";
 
-const ProfileFeed = (props: { userId: string }) => {
+const ProfileFeed = (props: { userId: string; feedType: string }) => {
   const { data, isLoading } = api.posts.getPostsByUserId.useQuery({
     userId: props.userId,
   });
@@ -116,8 +116,6 @@ const Home: NextPage<{
                 >
                   <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
                 </div>
-
-                {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
                 <span
                   className="hidden sm:inline-block sm:h-screen sm:align-middle"
                   aria-hidden="true"
@@ -178,7 +176,7 @@ const Home: NextPage<{
               </div>
             </dialog>
             <div className="text-center text-lg text-gray-500">
-              Bio: {data.bio?.bio}
+              {data.bio?.bio || "Add Bio"}
             </div>
             <div className="flex items-center rounded-md bg-blue-500 px-4 py-1 text-sm text-white">
               <IoPersonAddSharp className="mr-2 inline-block" />
@@ -245,15 +243,15 @@ const Home: NextPage<{
           </ul>
           {/* end tweets/replies/media/likes */}
 
-          <div className="flex items-center p-4 text-sm ">
+          {/* <div className="flex items-center p-4 text-sm ">
             <TbRefresh className="mr-1 text-gray-500" />
             <div className="text-center text-gray-500">
               {user?.fullName} retweeted
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className="px-4">
-          <ProfileFeed userId={data.id} />
+        <div className="px-4 py-2">
+          <ProfileFeed feedType={selectedTab} userId={data.id} />
         </div>
 
         {/* push all the way down and keep there even on scroll */}

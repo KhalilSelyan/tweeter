@@ -25,7 +25,19 @@ const Navbar = () => {
           />
         </Link>
       </div>
-      <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
+      <SignIn
+        appearance={{
+          layout: {
+            logoImageUrl: "/tweeter-small.svg",
+            logoPlacement: "inside",
+            socialButtonsVariant: "iconButton",
+            socialButtonsPlacement: "bottom",
+          },
+        }}
+        path="/sign-in"
+        routing="path"
+        signUpUrl="/sign-up"
+      />
 
       {!userData.isSignedIn ? (
         <SignInButton>
@@ -72,19 +84,19 @@ const Navbar = () => {
               <li>
                 <Link
                   onClick={() => setIsDropdownOpen(false)}
-                  href={`@${userData.user.username}`}
+                  href={`${userData.user.username}`}
                   className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   Profile
                 </Link>
               </li>
               {/* <li>
-                <a
-                  href="#"
+                <span
+                  onClick={() => {}}
                   className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   Settings
-                </a>
+                </span>
               </li> */}
             </ul>
             <SignOutButton>
