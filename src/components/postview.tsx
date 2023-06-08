@@ -263,7 +263,8 @@ export const PostView = (props: PostWithUser) => {
             </div>
             <span className="ml-14 mt-2 flex cursor-pointer items-center gap-x-1 p-1 text-sm font-light text-slate-400">
               <AiOutlineHeart className="text-lg hover:text-red-500" />{" "}
-              {comment._count.liked ?? 0}likes
+              {/* {comment._count.liked ?? 0} */}
+              0likes
               {/* <AiFillHeart className="text-lg hover:text-red-500" /> */}
             </span>
           </div>
