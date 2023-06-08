@@ -25,7 +25,7 @@ export default async function dan(req: NextApiRequest, res: NextApiResponse) {
           // You'll need to adjust this depending on your database schema
           id: user.id,
           bio: "",
-          username: user.username,
+          username: user.username ?? "idk",
           createdAt: new Date(user.createdAt),
         },
       });

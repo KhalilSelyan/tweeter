@@ -8,7 +8,8 @@
     "postinstall": "prisma generate",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "start": "next start"
+    "start": "next start",
+    "dbprod": "dotenv -e .env.prod -- npx prisma db push"
   },
   "dependencies": {
     "@clerk/backend": "^0.20.1",
@@ -25,6 +26,8 @@
     "@upstash/ratelimit": "^0.4.3",
     "@upstash/redis": "^1.20.6",
     "date-fns": "^2.30.0",
+    "dotenv": "^16.1.4",
+    "dotenv-cli": "^7.2.1",
     "next": "^13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
