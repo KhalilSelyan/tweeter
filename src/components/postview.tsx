@@ -1,4 +1,5 @@
 import { useUser } from "@clerk/nextjs";
+import { Comment } from "@prisma/client";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
@@ -131,11 +132,12 @@ export const PostView = (props: PostWithUser) => {
 
       {/* Comment Zone */}
       {/* @ts-ignore */}
-      {post.comments.map((comment: any) => (
+      {post.comments.map((comment: Comment) => (
         <div
           key={comment.id}
           className="flex gap-x-2 rounded-xl bg-slate-100 px-2 py-2"
         >
+          {/* @ts-ignore */}
           <span>{comment.user.username}</span>
           <span>{comment.content}</span>
           {comment.image !== "" && (

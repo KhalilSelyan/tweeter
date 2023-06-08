@@ -162,15 +162,8 @@ export const postsRouter = createTRPCRouter({
             image: true,
             createdAt: true,
             authorId: true,
-            comments: {
-              select: {
-                id: true,
-                content: true,
-                image: true,
-                createdAt: true,
-                authorId: true,
-              },
-            },
+            comments: true,
+            user: true,
           },
         })
         .then(addUserDataToPosts);
