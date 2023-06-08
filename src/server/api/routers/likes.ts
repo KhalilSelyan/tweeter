@@ -16,14 +16,14 @@ import { filterUserForClient } from "~/server/helpers/filterUserForClient";
 const addUserDataToPosts = async (posts: Post[]) => {
   const users = (
     await clerkClient.users.getUserList({
-      userId: posts.map((post) => post.authorId),
+      userId: posts.map((post) => post.pauthorId),
       limit: 100,
     })
   ).map(filterUserForClient);
 
   return posts.map((post) => {
     {
-      const author = users.find((user) => user.id === post.authorId);
+      const author = users.find((user) => user.id === post.pauthorId);
       if (!author) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -48,89 +48,5 @@ const rateLimiter = new Ratelimit({
 });
 
 export const likesRouter = createTRPCRouter({
-  getById: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
-      const post = await ctx.prisma.post.findUnique({
-        where: {
-          id: input.id,
-        },
-      });
-
-      if (!post) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Post not found",
-        });
-      }
-
-      const author = await clerkClient.users.getUser(post.authorId);
-      if (!author) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "User not found",
-        });
-      }
-
-      return (await addUserDataToPosts([post]))[0];
-    }),
-  getAll: publicProcedure.query(async ({ ctx }) => {
-    const posts = await ctx.prisma.post.findMany({
-      take: 100,
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-    return addUserDataToPosts(posts);
-  }),
-  getPostsByUserId: publicProcedure
-    .input(
-      z.object({
-        userId: z.string(),
-      })
-    )
-    .query(async ({ ctx, input }) => {
-      const posts = await ctx.prisma.post
-        .findMany({
-          where: {
-            authorId: input.userId,
-          },
-          take: 100,
-          orderBy: {
-            createdAt: "desc",
-          },
-        })
-        .then(addUserDataToPosts);
-      return posts;
-    }),
-  create: privateProcedure
-    .input(
-      z.object({
-        content: z
-          .string()
-          .min(1, "Post must be at least 1 character long")
-          .max(280, "Post must be at most 280 characters long"),
-        image: z.string().optional(),
-        postId: z.string(),
-      })
-    )
-    .mutation(async ({ ctx, input }) => {
-      const authorId = ctx.userId;
-      const { success } = await rateLimiter.limit(authorId);
-
-      if (!success) {
-        throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
-      }
-
-      const comment = await ctx.prisma.comment.create({
-        data: {
-          authorId,
-          content: input.content,
-          image: input.image ?? "",
-          postId: input.postId,
-        },
-      });
-
-      return comment;
-    }),
+  // addLike: privateProcedure.mutation()
 });

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useUser } from "@clerk/nextjs";
 import { Comment } from "@prisma/client";
 import { format } from "date-fns";
@@ -107,8 +108,8 @@ export const PostView = (props: PostWithUser) => {
         <img src={post.image} alt="" className="rounded-xl" width="100%" />
       )}
       <div className="flex items-center justify-end gap-x-2 px-4 text-xs text-slate-400">
-        <span>0 likes</span>
-        <span>0 comments</span>
+        <span>{post._count.liked ?? 0} likes</span>
+        <span>{post._count.comments} comments</span>
         <span>0 shares</span>
       </div>
       <hr />
@@ -218,7 +219,7 @@ export const PostView = (props: PostWithUser) => {
                   <Link href={`/@${comment.user.username}`}>
                     <span>@{comment.user.username}</span>
                   </Link>
-                  <span className="text-slate-400">
+                  <span className="font-light text-slate-400">
                     {format(comment.createdAt, "d MMMM")} at{" "}
                     {format(comment.createdAt, "HH:mm")}
                   </span>
