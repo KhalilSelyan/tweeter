@@ -140,6 +140,7 @@ export const PostView = (props: PostWithUser) => {
         />
         <div className="flex w-full items-center rounded-xl border border-slate-200 bg-slate-100 p-2">
           <form
+            className="w-full"
             onSubmit={(e) => {
               e.preventDefault();
               mutate({
@@ -155,16 +156,11 @@ export const PostView = (props: PostWithUser) => {
               type="text"
               placeholder={`Reply to @${author.username}`}
               className="w-full border-none bg-transparent text-slate-400 outline-none"
-              // onKeyDown={(e) => {
-              //   if (e.key === "Enter" && !e.shiftKey) {
-              //     mutate({
-              //       postId: post.id,
-              //       content: commentRef.current?.value || "",
-              //       image: ipfsUrl,
-              //       userId: user?.id || "",
-              //     });
-              //   }
-              // }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && e.shiftKey) {
+                  e.preventDefault();
+                }
+              }}
             />
           </form>
           {ipfsUrl && (

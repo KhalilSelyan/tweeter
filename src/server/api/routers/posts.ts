@@ -72,6 +72,9 @@ export const postsRouter = createTRPCRouter({
           comments: {
             // take: 2,
             // skip: page * 2,
+            orderBy: {
+              createdAt: "desc",
+            },
             select: {
               id: true,
               content: true,
@@ -123,6 +126,9 @@ export const postsRouter = createTRPCRouter({
         comments: {
           // take: 2,
           // skip: page * 2,
+          orderBy: {
+            createdAt: "desc",
+          },
           select: {
             id: true,
             content: true,
@@ -168,6 +174,9 @@ export const postsRouter = createTRPCRouter({
             comments: {
               // take: 2,
               // skip: page * 2,
+              orderBy: {
+                createdAt: "desc",
+              },
               select: {
                 id: true,
                 content: true,
