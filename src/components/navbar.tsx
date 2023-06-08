@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed left-0 top-0 flex h-14 w-full items-center justify-between bg-white px-4 py-2`}
+      className={`fixed left-0 top-0 z-10 flex h-14 w-full items-center justify-between bg-white px-4 py-2`}
     >
       <div>
         <Link href="/">

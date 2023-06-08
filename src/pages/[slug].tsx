@@ -73,7 +73,7 @@ const Home: NextPage<{
           <img
             src="https://i.pinimg.com/originals/4d/d5/85/4dd585d3e8a1a6b23f9a54e5a1076c8b.jpg"
             alt="Picture of the author"
-            className="h-44 w-full object-cover md:h-[30rem]"
+            className="h-56 w-full object-cover md:h-[28rem]"
           />
 
           {/* profile box */}
@@ -128,23 +128,23 @@ const Home: NextPage<{
                   aria-modal="true"
                   aria-labelledby="modal-headline"
                 >
-                  <div className=" px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                    <div className="sm:flex sm:items-start">
-                      <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                  <div className="flex flex-col p-6 md:h-72 md:w-96">
+                    <div className="flex w-full sm:items-start md:items-center">
+                      <div className="flex w-full flex-col gap-y-2 px-2 text-left md:mt-3 md:text-center">
                         <h3
                           className="text-lg font-medium leading-6 text-gray-900"
                           id="modal-headline"
                         >
                           Edit Bio
                         </h3>
-                        <div className="mt-2">
-                          <textarea
-                            ref={bioRef}
-                            className="block w-full rounded-md border border-gray-300 shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            placeholder="Bio"
-                            defaultValue={data.bio?.bio}
-                          ></textarea>
-                        </div>
+                        {/* <div className="mt-2"> */}
+                        <textarea
+                          ref={bioRef}
+                          className="flex w-full resize-none flex-col items-center  rounded-md border border-gray-300 px-4 pt-4 text-sm shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 md:h-48"
+                          placeholder="Bio"
+                          defaultValue={data.bio?.bio}
+                        />
+                        {/* </div> */}
                       </div>
                     </div>
                   </div>

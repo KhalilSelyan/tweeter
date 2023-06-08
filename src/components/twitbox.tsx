@@ -85,7 +85,7 @@ const Twitbox = () => {
             disabled={isPosting}
             ref={textAreaRef}
             placeholder="What's happening?"
-            className="h-32 bg-transparent px-4 text-black outline-none"
+            className="h-32 w-full resize-none bg-transparent px-4 text-black outline-none"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();

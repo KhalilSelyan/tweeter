@@ -48,7 +48,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Home / TwitClone</title>
       </Head>
-      <main className="mx-auto flex max-w-screen-2xl flex-col gap-y-2">
+      <main className="mx-auto flex max-w-screen-lg flex-col gap-y-2">
         <div className="flex flex-col gap-y-2 border-slate-400 px-4 pt-16">
           {/* <Uploader /> */}
           <Twitbox />

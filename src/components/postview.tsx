@@ -139,12 +139,12 @@ export const PostView = (props: PostWithUser) => {
           width={40}
           height={40}
         />
-        <div className="flex items-center rounded-xl border border-slate-200 bg-slate-100 p-2">
+        <div className="flex w-full items-center rounded-xl border border-slate-200 bg-slate-100 p-2">
           <input
             ref={commentRef}
             type="text"
-            placeholder="Reply to @user"
-            className="w-[90%] border-none bg-transparent text-slate-400 outline-none"
+            placeholder={`Reply to @${author.username}`}
+            className="w-full border-none bg-transparent text-slate-400 outline-none"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 mutate({
@@ -209,7 +209,7 @@ export const PostView = (props: PostWithUser) => {
                 height={40}
               />
               <div className="flex w-full flex-col gap-y-4 rounded-xl bg-slate-100 p-2 text-sm">
-                <div className="flex flex-col md:flex-row">
+                <div className="flex flex-col gap-y-2 font-semibold md:flex-row md:gap-x-2">
                   <Link href={`/@${comment.user.username}`}>
                     <span>@{comment.user.username}</span>
                   </Link>
