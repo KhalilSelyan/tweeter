@@ -158,4 +158,17 @@ export const commentsRouter = createTRPCRouter({
 
       return comment;
     }),
+  delete: privateProcedure
+    .input(
+      z.object({
+        commentId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.comment.delete({
+        where: {
+          id: input.commentId,
+        },
+      });
+    }),
 });

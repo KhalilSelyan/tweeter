@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { BsBookmark } from "react-icons/bs";
+import { BsBookmark, BsTrash } from "react-icons/bs";
 import { IoImageOutline } from "react-icons/io5";
 import { MdOutlineModeComment } from "react-icons/md";
 import { TbRefresh } from "react-icons/tb";
@@ -61,6 +61,17 @@ export const PostView = (props: PostWithUser) => {
     onSuccess: () => {
       void ctx.likes.invalidate();
       void ctx.posts.invalidate();
+    },
+    onError: (err) => {
+      const error = err.data?.zodError?.fieldErrors.content;
+      if (error && error[0]) toast.error(error[0]);
+      else toast.error("Something went wrong, please try again later");
+    },
+  });
+
+  const { mutate: deleteComment } = api.comment.delete.useMutation({
+    onSuccess: () => {
+      void ctx.comment.invalidate();
     },
     onError: (err) => {
       const error = err.data?.zodError?.fieldErrors.content;
@@ -257,12 +268,20 @@ export const PostView = (props: PostWithUser) => {
             alt="Picture of the commenter"
             className="h-10 w-10 rounded-xl border-2 object-scale-down "
           />
-          <div className="flex w-full flex-col gap-y-4 rounded-xl bg-slate-100 p-2 text-sm">
+          <div className="relative flex w-full flex-col gap-y-4 rounded-xl bg-slate-100 p-2 text-sm">
             <div className="flex flex-col gap-y-2 font-semibold md:flex-row md:gap-x-2">
               <span>@khalilselyan</span>
               <span className="font-light text-slate-400">
                 {format(new Date(), "d MMMM")} at {format(new Date(), "HH:mm")}
               </span>
+              <BsTrash
+                onClick={() => {
+                  deleteComment({
+                    commentId: comment.id,
+                  });
+                }}
+                className="absolute right-2 top-2 h-5 w-5 cursor-pointer opacity-50 transition-opacity duration-200 hover:opacity-100"
+              />
             </div>
             <div>
               <span>Meowww</span>
@@ -285,7 +304,16 @@ export const PostView = (props: PostWithUser) => {
                 alt="Picture of the commenter"
                 className="h-10 w-10 rounded-xl"
               />
-              <div className="flex w-full flex-col gap-y-4 rounded-xl bg-slate-100 p-2 text-sm">
+              <div className="relative flex w-full flex-col gap-y-4 rounded-xl bg-slate-100 p-2 text-sm">
+                <BsTrash
+                  onClick={() => {
+                    deleteComment({
+                      commentId: comment.id,
+                    });
+                  }}
+                  className="absolute right-2 top-2 h-5 w-5 cursor-pointer opacity-50 transition-opacity duration-200 hover:opacity-100"
+                />
+
                 <div className="flex flex-col gap-y-2 font-semibold md:flex-row md:gap-x-2">
                   <Link href={`/@${comment.user.username}`}>
                     <span>@{comment.user.username}</span>
