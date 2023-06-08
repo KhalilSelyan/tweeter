@@ -121,7 +121,7 @@ export const postsRouter = createTRPCRouter({
         createdAt: true,
         pauthorId: true,
         comments: {
-          take: 2,
+          // take: 2,
           // skip: page * 2,
           select: {
             id: true,
@@ -159,13 +159,24 @@ export const postsRouter = createTRPCRouter({
                 liked: true,
               },
             },
+            user: false,
             id: true,
             content: true,
             image: true,
             createdAt: true,
             pauthorId: true,
-            comments: true,
-            user: true,
+            comments: {
+              // take: 2,
+              // skip: page * 2,
+              select: {
+                id: true,
+                content: true,
+                image: true,
+                createdAt: true,
+                cauthorId: true,
+                user: true,
+              },
+            },
           },
         })
         .then(addUserDataToPosts);

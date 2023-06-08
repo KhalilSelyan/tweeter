@@ -201,15 +201,13 @@ export const PostView = (props: PostWithUser) => {
           <div className="flex flex-col p-2" key={comment.id}>
             <div className="flex gap-x-2 rounded-xl">
               {/* @ts-ignore */}
-              {comment.user.profileImage && (
-                <Image
-                  src={comment.user.profileImage}
-                  alt=""
-                  className="h-10 w-10 rounded-xl"
-                  width={40}
-                  height={40}
-                />
-              )}
+              <Image
+                src={comment.user.profileImage}
+                alt=""
+                className="h-10 w-10 rounded-xl"
+                width={40}
+                height={40}
+              />
               <div className="flex w-full flex-col gap-y-4 rounded-xl bg-slate-100 p-2 text-sm">
                 <div className="flex flex-col gap-y-2 font-semibold md:flex-row md:gap-x-2">
                   <Link href={`/@${comment.user.username}`}>
