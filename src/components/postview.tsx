@@ -132,23 +132,25 @@ export const PostView = (props: PostWithUser) => {
 
       {/* Comment Zone */}
       {/* @ts-ignore */}
-      {post.comments.map((comment: Comment) => (
-        <div
-          key={comment.id}
-          className="flex gap-x-2 rounded-xl bg-slate-100 px-2 py-2"
-        >
-          {/* @ts-ignore */}
-          <span>{comment.user.username}</span>
-          <span>{comment.content}</span>
-          {comment.image !== "" && (
-            <Image
-              src={comment.image}
-              alt=""
-              className="aspect-auto h-52 rounded-xl"
-            />
-          )}
-        </div>
-      ))}
+      {post.comments.map((comment: Comment) => {
+        return (
+          <div
+            key={comment.id}
+            className="flex gap-x-2 rounded-xl bg-slate-100 px-2 py-2"
+          >
+            {/* @ts-ignore */}
+            <span>{comment.user.username}</span>
+            <span>{comment.content}</span>
+            {comment.image !== "" && (
+              <Image
+                src={comment.image}
+                alt=""
+                className="aspect-auto h-52 rounded-xl"
+              />
+            )}
+          </div>
+        );
+      })}
       {/* End comment zone */}
 
       {/* reply zone */}

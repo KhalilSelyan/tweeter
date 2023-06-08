@@ -8,7 +8,6 @@ export default async function dan(req: NextApiRequest, res: NextApiResponse) {
     try {
       // Get user data from request body
       const user = await clerk.users.getUser(req.body.data.id);
-      //   console.log(user, "WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEBHOOK");
 
       // Check if user already exists in your database
       const existingUser = await prisma.user.findUnique({
@@ -25,7 +24,7 @@ export default async function dan(req: NextApiRequest, res: NextApiResponse) {
           // You'll need to adjust this depending on your database schema
           id: user.id,
           bio: "",
-          username: user.username ?? "idk",
+          username: user.username!,
           createdAt: new Date(user.createdAt),
         },
       });
