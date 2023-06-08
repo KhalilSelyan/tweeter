@@ -37,10 +37,10 @@ export const PostView = (props: PostWithUser) => {
       commentRef.current.value = "";
       setFile(null);
       setIpfsUrl("");
-      if (router.pathname === "/") void ctx.posts.getAll.invalidate();
+      if (router.pathname === "") void ctx.posts.getAll.invalidate();
       if (router.pathname.includes("@"))
         void ctx.posts.getPostsByUserId.invalidate();
-      if (router.pathname === `/post/${post.id}`)
+      if (router.pathname.includes(`/post/${post.id}`))
         void ctx.posts.getById.invalidate();
     },
     onError: (err) => {
