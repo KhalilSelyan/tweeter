@@ -141,6 +141,13 @@ export const PostView = (props: PostWithUser) => {
       userId: post.pauthorId,
     });
 
+  const { data: bookMarkList, isLoading: bookmarkLoading } =
+    api.bookmark.bookmarksByUserId.useQuery({
+      userId: user!.id,
+    });
+
+  console.log(bookMarkList);
+
   if (arrayLoading) return <></>;
 
   return (
