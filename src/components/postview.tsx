@@ -101,12 +101,12 @@ export const PostView = (props: PostWithUser) => {
     setUploading(false);
   };
 
-  const { data: likesArray, isLoading: arrayLoaded } =
+  const { data: likesArray, isLoading: arrayLoading } =
     api.likes.likesByUserId.useQuery({
       userId: post.pauthorId,
     });
 
-  if (!arrayLoaded) return <></>;
+  if (arrayLoading) return <></>;
 
   return (
     <div className="flex flex-col justify-center gap-y-2 rounded-xl border-2 border-gray-200 bg-white">
