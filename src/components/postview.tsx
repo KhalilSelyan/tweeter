@@ -208,7 +208,7 @@ export const PostView = (props: PostWithUser) => {
                 width={40}
                 height={40}
               />
-              <div className="flex bg-slate-100 text-sm">
+              <div className="flex w-full bg-slate-100 text-sm">
                 <div className="flex flex-col md:flex-row">
                   <Link href={`/@${comment.user.username}`}>
                     <span>@{comment.user.username}</span>
