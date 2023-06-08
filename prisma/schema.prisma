@@ -24,12 +24,12 @@ model Post {
   createdAt DateTime  @default(now())
   content   String    @db.VarChar(255)
   image     String    @default("") @db.VarChar(255)
-  authorId  String
-  user      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  pauthorId String
+  user      User      @relation(fields: [pauthorId], references: [id], onDelete: Cascade)
   liked     Liked[]
   comments  Comment[]
 
-  @@index([authorId])
+  @@index([pauthorId])
 }
 
 model Comment {
@@ -37,14 +37,14 @@ model Comment {
   createdAt DateTime @default(now())
   content   String   @db.VarChar(255)
   image     String   @default("") @db.VarChar(255)
-  authorId  String
+  cauthorId String
   postId    String
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [cauthorId], references: [id], onDelete: Cascade)
   liked     Liked[]
 
   @@index([postId])
-  @@index([authorId])
+  @@index([cauthorId])
 }
 
 model Liked {
