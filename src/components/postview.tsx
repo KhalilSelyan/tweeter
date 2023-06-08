@@ -101,10 +101,9 @@ export const PostView = (props: PostWithUser) => {
     setUploading(false);
   };
 
-  if (!user) return;
   const { data: likesArray, isLoading: arrayLoaded } =
     api.likes.likesByUserId.useQuery({
-      userId: user.id,
+      userId: post.pauthorId,
     });
 
   if (!arrayLoaded) return <></>;
@@ -311,6 +310,7 @@ export const PostView = (props: PostWithUser) => {
             </div>
             <div
               onClick={() => {
+                if (!likesArray) return;
                 !likesArray.commentIdArray.includes(comment.id)
                   ? addLike({
                       commentId: comment.id,
