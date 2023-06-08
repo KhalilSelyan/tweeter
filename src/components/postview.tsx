@@ -155,7 +155,14 @@ export const PostView = (props: PostWithUser) => {
           <TbRefresh className="h-5 w-5" />
         </div>
         <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
-          <AiOutlineHeart className="h-5 w-5" />
+          <AiOutlineHeart
+            onClick={() => {
+              addLike({
+                postId: post.id,
+              });
+            }}
+            className="h-5 w-5"
+          />
         </div>
         <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
           <BsBookmark className="h-5 w-5" />
@@ -301,7 +308,7 @@ export const PostView = (props: PostWithUser) => {
               <AiOutlineHeart
                 onClick={() => {
                   addLike({
-                    postId: post.id,
+                    postId: comment.id,
                   });
                 }}
                 className="text-lg hover:text-red-500"
@@ -316,7 +323,7 @@ export const PostView = (props: PostWithUser) => {
               <AiFillHeart
                 onClick={() => {
                   removeLike({
-                    postId: post.id,
+                    postId: comment.id,
                   });
                 }}
                 className=" text-lg hover:text-red-500"
