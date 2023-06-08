@@ -199,7 +199,7 @@ export const PostView = (props: PostWithUser) => {
       {post.comments.map((comment: Comment) => {
         return (
           <div className="flex flex-col p-2" key={comment.id}>
-            <div className="flex gap-x-2 rounded-xl bg-slate-100">
+            <div className="flex gap-x-2 rounded-xl">
               {/* @ts-ignore */}
               <Image
                 src={comment.user.profileImage}
@@ -208,17 +208,24 @@ export const PostView = (props: PostWithUser) => {
                 width={40}
                 height={40}
               />
-              <div className="flex flex-col text-sm md:flex-row ">
-                <Link href={`/@${comment.user.username}`}>
-                  <span>@{comment.user.username}</span>
-                </Link>
-                <span className="text-slate-400">
-                  {format(comment.createdAt, "d MMMM")} at{" "}
-                  {format(comment.createdAt, "HH:mm")}
-                </span>
-              </div>{" "}
+              <div className="flex bg-slate-100 text-sm">
+                <div className="flex flex-col md:flex-row">
+                  <Link href={`/@${comment.user.username}`}>
+                    <span>@{comment.user.username}</span>
+                  </Link>
+                  <span className="text-slate-400">
+                    {format(comment.createdAt, "d MMMM")} at{" "}
+                    {format(comment.createdAt, "HH:mm")}
+                  </span>
+                </div>
+                <span>{comment.content}</span>
+                <img
+                  src={comment.image}
+                  className="h-48 rounded-xl object-cover md:h-96"
+                  alt=""
+                />
+              </div>
             </div>
-            <span>{comment.content}</span>
           </div>
         );
       })}
