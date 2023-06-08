@@ -77,6 +77,11 @@ export const postsRouter = createTRPCRouter({
             },
             select: {
               id: true,
+              _count: {
+                select: {
+                  liked: true,
+                },
+              },
               content: true,
               image: true,
               createdAt: true,
@@ -130,6 +135,11 @@ export const postsRouter = createTRPCRouter({
             createdAt: "desc",
           },
           select: {
+            _count: {
+              select: {
+                liked: true,
+              },
+            },
             id: true,
             content: true,
             image: true,
@@ -178,6 +188,11 @@ export const postsRouter = createTRPCRouter({
                 createdAt: "desc",
               },
               select: {
+                _count: {
+                  select: {
+                    liked: true,
+                  },
+                },
                 id: true,
                 content: true,
                 image: true,
