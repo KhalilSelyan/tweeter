@@ -67,9 +67,6 @@ export const PostView = (props: PostWithUser) => {
     },
   });
 
-  const { data: likesArray, isLoading: arrayLoaded } =
-    api.likes.likesByUserId.useQuery();
-
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [ipfsUrl, setIpfsUrl] = useState("");
@@ -103,6 +100,12 @@ export const PostView = (props: PostWithUser) => {
     setIpfsUrl(url);
     setUploading(false);
   };
+
+  if (!user) return;
+  const { data: likesArray, isLoading: arrayLoaded } =
+    api.likes.likesByUserId.useQuery({
+      userId: user.id,
+    });
 
   if (!arrayLoaded) return <></>;
 

@@ -49,31 +49,37 @@ const rateLimiter = new Ratelimit({
 });
 
 export const likesRouter = createTRPCRouter({
-  likesByUserId: publicProcedure.query(async ({ ctx }) => {
-    const userId = ctx.userId;
-    const liked = await ctx.prisma.liked.findMany({
-      where: {
-        userId: userId!,
-      },
-      select: {
-        postId: true,
-        commentId: true,
-      },
-    });
+  likesByUserId: publicProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const userId = input.userId;
+      const liked = await ctx.prisma.liked.findMany({
+        where: {
+          userId: userId!,
+        },
+        select: {
+          postId: true,
+          commentId: true,
+        },
+      });
 
-    const postIdArray = liked.map((value) => {
-      return value.postId;
-    });
+      const postIdArray = liked.map((value) => {
+        return value.postId;
+      });
 
-    const commentIdArray = liked.map((value) => {
-      return value.commentId;
-    });
+      const commentIdArray = liked.map((value) => {
+        return value.commentId;
+      });
 
-    return {
-      postIdArray,
-      commentIdArray,
-    };
-  }),
+      return {
+        postIdArray,
+        commentIdArray,
+      };
+    }),
   create: privateProcedure
     .input(
       z.object({
