@@ -141,9 +141,9 @@ export const PostView = (props: PostWithUser) => {
             {/* @ts-ignore */}
             <span>{comment.user.username}</span>
             <span>{comment.content}</span>
-            {comment.image !== "" && (
+            {comment.user.profileImageUrl !== "" && (
               <Image
-                src={comment.image}
+                src={comment.user.profileImageUrl}
                 alt=""
                 className="aspect-auto h-52 rounded-xl"
               />
