@@ -80,6 +80,17 @@ export const PostView = (props: PostWithUser) => {
     },
   });
 
+  const { mutate: deletePost } = api.posts.delete.useMutation({
+    onSuccess: () => {
+      void ctx.posts.invalidate();
+    },
+    onError: (err) => {
+      const error = err.data?.zodError?.fieldErrors.content;
+      if (error && error[0]) toast.error(error[0]);
+      else toast.error("Something went wrong, please try again later");
+    },
+  });
+
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [ipfsUrl, setIpfsUrl] = useState("");
@@ -122,7 +133,15 @@ export const PostView = (props: PostWithUser) => {
   if (arrayLoading) return <></>;
 
   return (
-    <div className="flex flex-col justify-center gap-y-2 rounded-xl border-2 border-gray-200 bg-white">
+    <div className="relative flex flex-col justify-center gap-y-2 rounded-xl border-2 border-gray-200 bg-white">
+      <BsTrash
+        onClick={() => {
+          deletePost({
+            postId: post.id,
+          });
+        }}
+        className="absolute right-2 top-2 h-5 w-5 cursor-pointer opacity-50 transition-opacity duration-200 hover:opacity-100"
+      />
       <div className="flex items-center gap-x-2 p-4">
         <Link href={`/@${author.username}`}>
           <Image
