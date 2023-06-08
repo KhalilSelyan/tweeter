@@ -139,7 +139,7 @@ export const commentsRouter = createTRPCRouter({
 
       const comment = await ctx.prisma.comment.create({
         data: {
-          cauthorId,
+          // cauthorId,
           content: input.content,
           image: input.image ?? "",
           postId: input.postId,
