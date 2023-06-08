@@ -45,15 +45,8 @@ export const PostView = (props: PostWithUser) => {
     },
   });
 
-  const fillRef = useRef<HTMLDivElement>(null);
-  const outlineRef = useRef<HTMLDivElement>(null);
-
   const { mutate: addLike } = api.likes.create.useMutation({
     onSuccess: () => {
-      if (fillRef.current && outlineRef.current) {
-        fillRef.current.classList.replace("hidden", "flex");
-        outlineRef.current.classList.replace("flex", "hidden");
-      }
       void ctx.likes.invalidate();
     },
     onError: (err) => {
@@ -65,10 +58,6 @@ export const PostView = (props: PostWithUser) => {
 
   const { mutate: removeLike } = api.likes.delete.useMutation({
     onSuccess: () => {
-      if (fillRef.current && outlineRef.current) {
-        fillRef.current.classList.replace("hidden", "block");
-        outlineRef.current.classList.replace("block", "hidden");
-      }
       void ctx.likes.invalidate();
     },
     onError: (err) => {
@@ -77,6 +66,9 @@ export const PostView = (props: PostWithUser) => {
       else toast.error("Something went wrong, please try again later");
     },
   });
+
+  const { data: likesArray, isLoading: arrayLoaded } =
+    api.likes.likesByUserId.useQuery();
 
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -111,6 +103,8 @@ export const PostView = (props: PostWithUser) => {
     setIpfsUrl(url);
     setUploading(false);
   };
+
+  if (!arrayLoaded) return <></>;
 
   return (
     <div className="flex flex-col justify-center gap-y-2 rounded-xl border-2 border-gray-200 bg-white">
@@ -155,14 +149,25 @@ export const PostView = (props: PostWithUser) => {
           <TbRefresh className="h-5 w-5" />
         </div>
         <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
-          <AiOutlineHeart
-            onClick={() => {
-              addLike({
-                postId: post.id,
-              });
-            }}
-            className="h-5 w-5"
-          />
+          {!likesArray.postIdArray.includes(post.id) ? (
+            <AiOutlineHeart
+              onClick={() => {
+                addLike({
+                  postId: post.id,
+                });
+              }}
+              className="h-5 w-5"
+            />
+          ) : (
+            <AiFillHeart
+              onClick={() => {
+                removeLike({
+                  postId: post.id,
+                });
+              }}
+              className="h-5 w-5"
+            />
+          )}
         </div>
         <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
           <BsBookmark className="h-5 w-5" />
@@ -302,33 +307,23 @@ export const PostView = (props: PostWithUser) => {
               </div>
             </div>
             <div
-              ref={outlineRef}
+              onClick={() => {
+                !likesArray.commentIdArray.includes(comment.id)
+                  ? addLike({
+                      commentId: comment.id,
+                    })
+                  : removeLike({
+                      commentId: comment.id,
+                    });
+              }}
               className="ml-14 mt-2 flex cursor-pointer items-center gap-x-1 p-1 text-sm font-light text-slate-400"
             >
-              <AiOutlineHeart
-                onClick={() => {
-                  addLike({
-                    commentId: comment.id,
-                  });
-                }}
-                className="text-lg hover:text-red-500"
-              />{" "}
-              {comment._count.liked ?? 0}
-              {/* 0likes */}
-            </div>
-            <div
-              ref={fillRef}
-              className="ml-14 mt-2 hidden cursor-pointer items-center gap-x-1 p-1 text-sm font-light text-slate-400"
-            >
-              <AiFillHeart
-                onClick={() => {
-                  removeLike({
-                    commentId: comment.id,
-                  });
-                }}
-                className=" text-lg hover:text-red-500"
-              />{" "}
-              {comment._count.liked ?? 0}
+              {!likesArray.commentIdArray.includes(comment.id) ? (
+                <AiOutlineHeart className="text-lg hover:text-red-500" />
+              ) : (
+                <AiFillHeart className="text-lg text-red-500" />
+              )}{" "}
+              {comment._count.liked ?? 0} likes
               {/* 0likes */}
             </div>
           </div>
