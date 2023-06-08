@@ -152,25 +152,22 @@ export const PostView = (props: PostWithUser) => {
         <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
           <TbRefresh className="h-5 w-5" />
         </div>
-        <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
+        <div
+          onClick={() => {
+            !likesArray.postIdArray.includes(post.id)
+              ? addLike({
+                  postId: post.id,
+                })
+              : removeLike({
+                  postId: post.id,
+                });
+          }}
+          className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100"
+        >
           {!likesArray.postIdArray.includes(post.id) ? (
-            <AiOutlineHeart
-              onClick={() => {
-                addLike({
-                  postId: post.id,
-                });
-              }}
-              className="h-5 w-5"
-            />
+            <AiOutlineHeart className="h-5 w-5" />
           ) : (
-            <AiFillHeart
-              onClick={() => {
-                removeLike({
-                  postId: post.id,
-                });
-              }}
-              className="h-5 w-5"
-            />
+            <AiFillHeart className="h-5 w-5" />
           )}
         </div>
         <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
