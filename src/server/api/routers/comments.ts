@@ -16,14 +16,14 @@ import { filterUserForClient } from "~/server/helpers/filterUserForClient";
 const addUserDataToPosts = async (posts: Post[]) => {
   const users = (
     await clerkClient.users.getUserList({
-      userId: posts.map((post) => post.authorId),
+      userId: posts.map((post) => post.pauthorId),
       limit: 100,
     })
   ).map(filterUserForClient);
 
   return posts.map((post) => {
     {
-      const author = users.find((user) => user.id === post.authorId);
+      const author = users.find((user) => user.id === post.pauthorId);
       if (!author) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -64,7 +64,7 @@ export const commentsRouter = createTRPCRouter({
         });
       }
 
-      const author = await clerkClient.users.getUser(post.authorId);
+      const author = await clerkClient.users.getUser(post.pauthorId);
       if (!author) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -93,7 +93,7 @@ export const commentsRouter = createTRPCRouter({
       const posts = await ctx.prisma.post
         .findMany({
           where: {
-            authorId: input.userId,
+            pauthorId: input.userId,
           },
           take: 100,
           orderBy: {
@@ -116,8 +116,8 @@ export const commentsRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const authorId = ctx.userId;
-      const { success } = await rateLimiter.limit(authorId);
+      const cauthorId = ctx.userId;
+      const { success } = await rateLimiter.limit(cauthorId);
 
       if (!success) {
         throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
@@ -125,7 +125,7 @@ export const commentsRouter = createTRPCRouter({
 
       const user = await ctx.prisma.user.findUnique({
         where: {
-          id: authorId,
+          id: cauthorId,
         },
       });
 
@@ -139,7 +139,7 @@ export const commentsRouter = createTRPCRouter({
 
       const comment = await ctx.prisma.comment.create({
         data: {
-          authorId,
+          cauthorId,
           content: input.content,
           image: input.image ?? "",
           postId: input.postId,

@@ -17,14 +17,14 @@ import { filterUserForClient } from "~/server/helpers/filterUserForClient";
 const addUserDataToPosts = async (posts: Post[]) => {
   const users = (
     await clerkClient.users.getUserList({
-      userId: posts.map((post) => post.authorId),
+      userId: posts.map((post) => post.pauthorId),
       limit: 100,
     })
   ).map(filterUserForClient);
 
   return posts.map((post) => {
     {
-      const author = users.find((user) => user.id === post.authorId);
+      const author = users.find((user) => user.id === post.pauthorId);
       if (!author) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -68,7 +68,7 @@ export const postsRouter = createTRPCRouter({
           content: true,
           image: true,
           createdAt: true,
-          authorId: true,
+          pauthorId: true,
           comments: {
             take: 2,
             // skip: page * 2,
@@ -77,7 +77,8 @@ export const postsRouter = createTRPCRouter({
               content: true,
               image: true,
               createdAt: true,
-              authorId: true,
+              cauthorId: true,
+              user: true,
             },
           },
         },
@@ -90,7 +91,7 @@ export const postsRouter = createTRPCRouter({
         });
       }
 
-      const author = await clerkClient.users.getUser(post.authorId);
+      const author = await clerkClient.users.getUser(post.pauthorId);
       if (!author) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -118,7 +119,7 @@ export const postsRouter = createTRPCRouter({
         content: true,
         image: true,
         createdAt: true,
-        authorId: true,
+        pauthorId: true,
         comments: {
           take: 2,
           // skip: page * 2,
@@ -127,7 +128,8 @@ export const postsRouter = createTRPCRouter({
             content: true,
             image: true,
             createdAt: true,
-            authorId: true,
+            cauthorId: true,
+            user: true,
           },
         },
       },
@@ -144,7 +146,7 @@ export const postsRouter = createTRPCRouter({
       const posts = await ctx.prisma.post
         .findMany({
           where: {
-            authorId: input.userId,
+            pauthorId: input.userId,
           },
           take: 100,
           orderBy: {
@@ -161,7 +163,7 @@ export const postsRouter = createTRPCRouter({
             content: true,
             image: true,
             createdAt: true,
-            authorId: true,
+            pauthorId: true,
             comments: true,
             user: true,
           },
@@ -180,8 +182,8 @@ export const postsRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const authorId = ctx.userId;
-      const { success } = await rateLimiter.limit(authorId);
+      const pauthorId = ctx.userId;
+      const { success } = await rateLimiter.limit(pauthorId);
 
       if (!success) {
         throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
@@ -189,7 +191,7 @@ export const postsRouter = createTRPCRouter({
 
       const post = await ctx.prisma.post.create({
         data: {
-          authorId,
+          pauthorId,
           content: input.content,
           image: input.image ?? "",
         },
