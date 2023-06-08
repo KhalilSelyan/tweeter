@@ -143,10 +143,16 @@ export const commentsRouter = createTRPCRouter({
           content: input.content,
           image: input.image ?? "",
           // postId: input.postId,
-          // @ts-ignore
-          user: user,
-          // @ts-ignore
-          post: post,
+          user: {
+            connect: {
+              id: input.userId,
+            },
+          },
+          post: {
+            connect: {
+              id: input.postId,
+            },
+          },
         },
       });
 
