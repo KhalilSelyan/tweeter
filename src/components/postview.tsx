@@ -48,6 +48,7 @@ export const PostView = (props: PostWithUser) => {
   const { mutate: addLike } = api.likes.create.useMutation({
     onSuccess: () => {
       void ctx.likes.invalidate();
+      void ctx.posts.invalidate();
     },
     onError: (err) => {
       const error = err.data?.zodError?.fieldErrors.content;
@@ -59,6 +60,7 @@ export const PostView = (props: PostWithUser) => {
   const { mutate: removeLike } = api.likes.delete.useMutation({
     onSuccess: () => {
       void ctx.likes.invalidate();
+      void ctx.posts.invalidate();
     },
     onError: (err) => {
       const error = err.data?.zodError?.fieldErrors.content;
