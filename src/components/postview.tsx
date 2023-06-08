@@ -45,6 +45,39 @@ export const PostView = (props: PostWithUser) => {
     },
   });
 
+  const fillRef = useRef<HTMLDivElement>(null);
+  const outlineRef = useRef<HTMLDivElement>(null);
+
+  const { mutate: addLike } = api.likes.create.useMutation({
+    onSuccess: () => {
+      if (fillRef.current && outlineRef.current) {
+        fillRef.current.classList.replace("hidden", "flex");
+        outlineRef.current.classList.replace("flex", "hidden");
+      }
+      void ctx.likes.invalidate();
+    },
+    onError: (err) => {
+      const error = err.data?.zodError?.fieldErrors.content;
+      if (error && error[0]) toast.error(error[0]);
+      else toast.error("Something went wrong, please try again later");
+    },
+  });
+
+  const { mutate: removeLike } = api.likes.delete.useMutation({
+    onSuccess: () => {
+      if (fillRef.current && outlineRef.current) {
+        fillRef.current.classList.replace("hidden", "block");
+        outlineRef.current.classList.replace("block", "hidden");
+      }
+      void ctx.likes.invalidate();
+    },
+    onError: (err) => {
+      const error = err.data?.zodError?.fieldErrors.content;
+      if (error && error[0]) toast.error(error[0]);
+      else toast.error("Something went wrong, please try again later");
+    },
+  });
+
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [ipfsUrl, setIpfsUrl] = useState("");
@@ -261,12 +294,36 @@ export const PostView = (props: PostWithUser) => {
                 </div>
               </div>
             </div>
-            <span className="ml-14 mt-2 flex cursor-pointer items-center gap-x-1 p-1 text-sm font-light text-slate-400">
-              <AiOutlineHeart className="text-lg hover:text-red-500" />{" "}
+            <div
+              ref={outlineRef}
+              className="ml-14 mt-2 flex cursor-pointer items-center gap-x-1 p-1 text-sm font-light text-slate-400"
+            >
+              <AiOutlineHeart
+                onClick={() => {
+                  addLike({
+                    postId: post.id,
+                  });
+                }}
+                className="text-lg hover:text-red-500"
+              />{" "}
               {comment._count.liked ?? 0}
               {/* 0likes */}
-              {/* <AiFillHeart className="text-lg hover:text-red-500" /> */}
-            </span>
+            </div>
+            <div
+              ref={fillRef}
+              className="ml-14 mt-2 hidden cursor-pointer items-center gap-x-1 p-1 text-sm font-light text-slate-400"
+            >
+              <AiFillHeart
+                onClick={() => {
+                  removeLike({
+                    postId: post.id,
+                  });
+                }}
+                className=" text-lg hover:text-red-500"
+              />{" "}
+              {comment._count.liked ?? 0}
+              {/* 0likes */}
+            </div>
           </div>
         );
       })}

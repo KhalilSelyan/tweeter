@@ -1,5 +1,6 @@
+import type { User } from "@clerk/nextjs/dist/api";
 import { clerkClient } from "@clerk/nextjs/server";
-import { Post } from "@prisma/client";
+import { Liked } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
@@ -13,28 +14,28 @@ import {
 
 import { filterUserForClient } from "~/server/helpers/filterUserForClient";
 
-const addUserDataToPosts = async (posts: Post[]) => {
+const addUserDataToLikes = async (likes: Liked[]) => {
   const users = (
     await clerkClient.users.getUserList({
-      userId: posts.map((post) => post.pauthorId),
+      userId: likes.map((like) => like.userId),
       limit: 100,
     })
   ).map(filterUserForClient);
 
-  return posts.map((post) => {
+  return likes.map((like) => {
     {
-      const author = users.find((user) => user.id === post.pauthorId);
-      if (!author) {
+      const user = users.find((user) => user.id === like.userId);
+      if (!user) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "User not found",
         });
       }
       return {
-        post,
-        author: {
-          ...author,
-          username: author.username,
+        like,
+        user: {
+          ...user,
+          username: user.username,
         },
       };
     }
@@ -48,5 +49,58 @@ const rateLimiter = new Ratelimit({
 });
 
 export const likesRouter = createTRPCRouter({
-  // addLike: privateProcedure.mutation()
+  create: privateProcedure
+    .input(
+      z.object({
+        postId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.userId;
+      const { success } = await rateLimiter.limit(userId);
+
+      if (!success) {
+        throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
+      }
+
+      const like = await ctx.prisma.liked.create({
+        data: {
+          userId,
+          postId: input.postId,
+        },
+      });
+
+      return like;
+    }),
+  delete: privateProcedure
+    .input(
+      z.object({
+        postId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.userId;
+
+      const like = await ctx.prisma.liked.findFirst({
+        where: {
+          postId: input.postId,
+          userId,
+        },
+      });
+
+      if (!like) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Like not found",
+        });
+      }
+
+      await ctx.prisma.liked.delete({
+        where: {
+          id: like.id,
+        },
+      });
+
+      return { success: true };
+    }),
 });
