@@ -208,7 +208,7 @@ export const PostView = (props: PostWithUser) => {
                 width={40}
                 height={40}
               />
-              <div className="flex w-full flex-col rounded-xl bg-slate-100 p-2 text-sm">
+              <div className="flex w-full flex-col gap-y-4 rounded-xl bg-slate-100 p-2 text-sm">
                 <div className="flex flex-col md:flex-row">
                   <Link href={`/@${comment.user.username}`}>
                     <span>@{comment.user.username}</span>
@@ -218,12 +218,14 @@ export const PostView = (props: PostWithUser) => {
                     {format(comment.createdAt, "HH:mm")}
                   </span>
                 </div>
-                <span>{comment.content}</span>
-                <img
-                  src={comment.image}
-                  className="h-48 rounded-xl object-cover md:h-96"
-                  alt=""
-                />
+                <div>
+                  <span>{comment.content}</span>
+                  <img
+                    src={comment.image}
+                    className="aspect-auto h-48 rounded-xl object-cover"
+                    alt=""
+                  />
+                </div>
               </div>
             </div>
           </div>
