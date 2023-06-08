@@ -56,6 +56,17 @@ export const PostView = (props: PostWithUser) => {
       else toast.error("Something went wrong, please try again later");
     },
   });
+  const { mutate: addBookMark } = api.bookmark.create.useMutation({
+    onSuccess: () => {
+      void ctx.likes.invalidate();
+      void ctx.posts.invalidate();
+    },
+    onError: (err) => {
+      const error = err.data?.zodError?.fieldErrors.content;
+      if (error && error[0]) toast.error(error[0]);
+      else toast.error("Something went wrong, please try again later");
+    },
+  });
 
   const { mutate: removeLike } = api.likes.delete.useMutation({
     onSuccess: () => {
@@ -181,9 +192,6 @@ export const PostView = (props: PostWithUser) => {
         <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
           <MdOutlineModeComment className="h-5 w-5" />
         </div>
-        <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
-          <TbRefresh className="h-5 w-5" />
-        </div>
         <div
           onClick={() => {
             !likesArray.postIdArray.includes(post.id)
@@ -202,7 +210,15 @@ export const PostView = (props: PostWithUser) => {
             <AiFillHeart className="h-5 w-5" />
           )}
         </div>
-        <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
+        <div
+          onClick={() => {
+            addBookMark({
+              userId: user!.id,
+              postId: post.id,
+            });
+          }}
+          className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100"
+        >
           <BsBookmark className="h-5 w-5" />
         </div>
       </div>
