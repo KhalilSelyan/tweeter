@@ -208,7 +208,15 @@ export const PostView = (props: PostWithUser) => {
                 width={40}
                 height={40}
               />
-              <span>{comment.user.username}</span>
+              <div className="flex flex-col text-sm md:flex-row ">
+                <Link href={`/@${comment.user.username}`}>
+                  <span>@{comment.user.username}</span>
+                </Link>
+                <span className="text-slate-400">
+                  {format(comment.createdAt, "d MMMM")} at{" "}
+                  {format(comment.createdAt, "HH:mm")}
+                </span>
+              </div>{" "}
             </div>
             <span>{comment.content}</span>
           </div>
