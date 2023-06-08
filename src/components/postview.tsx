@@ -202,7 +202,7 @@ export const PostView = (props: PostWithUser) => {
             <div className="flex gap-x-2 rounded-xl bg-slate-100">
               {/* @ts-ignore */}
               <Image
-                src={comment.user.profileImageUrl}
+                src={comment.user.profileImage}
                 alt=""
                 className="h-10 w-10 rounded-xl"
                 width={40}
