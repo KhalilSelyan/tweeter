@@ -70,7 +70,7 @@ export const postsRouter = createTRPCRouter({
           createdAt: true,
           pauthorId: true,
           comments: {
-            take: 2,
+            // take: 2,
             // skip: page * 2,
             select: {
               id: true,
