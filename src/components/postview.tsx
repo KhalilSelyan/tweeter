@@ -114,16 +114,16 @@ export const PostView = (props: PostWithUser) => {
       <hr />
       {/* icons container */}
       <div className="flex items-center p-2">
-        <div className="flex h-10 grow items-center justify-center rounded-xl hover:bg-gray-100">
+        <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
           <MdOutlineModeComment className="h-5 w-5" />
         </div>
-        <div className="flex h-10 grow items-center justify-center rounded-xl hover:bg-gray-100">
+        <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
           <TbRefresh className="h-5 w-5" />
         </div>
-        <div className="flex h-10 grow items-center justify-center rounded-xl hover:bg-gray-100">
+        <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
           <AiOutlineHeart className="h-5 w-5" />
         </div>
-        <div className="flex h-10 grow items-center justify-center rounded-xl hover:bg-gray-100">
+        <div className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100">
           <BsBookmark className="h-5 w-5" />
         </div>
       </div>
@@ -208,12 +208,10 @@ export const PostView = (props: PostWithUser) => {
           <div className="flex flex-col p-2" key={comment.id}>
             <div className="flex gap-x-2 rounded-xl">
               {/* @ts-ignore */}
-              <Image
+              <img
                 src={comment.user.profileImage}
-                alt=""
+                alt="Picture of the commenter"
                 className="h-10 w-10 rounded-xl"
-                width={40}
-                height={40}
               />
               <div className="flex w-full flex-col gap-y-4 rounded-xl bg-slate-100 p-2 text-sm">
                 <div className="flex flex-col gap-y-2 font-semibold md:flex-row md:gap-x-2">
