@@ -130,30 +130,6 @@ export const PostView = (props: PostWithUser) => {
       </div>
       {/* end icons container */}
 
-      {/* Comment Zone */}
-      {/* @ts-ignore */}
-      {post.comments.map((comment: Comment) => {
-        return (
-          <div
-            key={comment.id}
-            className="flex gap-x-2 rounded-xl bg-slate-100 px-2 py-2"
-          >
-            {/* @ts-ignore */}
-            <span>{comment.user.username}</span>
-            <span>{comment.content}</span>
-            {/* @ts-ignore */}
-            {comment.user.profileImage !== "" && (
-              <Image
-                src={comment.user.profileImage}
-                alt=""
-                className="aspect-auto h-52 rounded-xl"
-              />
-            )}
-          </div>
-        );
-      })}
-      {/* End comment zone */}
-
       {/* reply zone */}
       <div className="flex gap-x-2 rounded-xl px-2 py-2">
         <Image
@@ -218,6 +194,27 @@ export const PostView = (props: PostWithUser) => {
           </div>
         </div>
       </div>
+      {/* Comment Zone */}
+      {/* @ts-ignore */}
+      {post.comments.map((comment: Comment) => {
+        return (
+          <div className="flex flex-col p-2" key={comment.id}>
+            <div className="flex gap-x-2 rounded-xl bg-slate-100">
+              {/* @ts-ignore */}
+              <Image
+                src={comment.user.profileImageUrl}
+                alt=""
+                className="h-10 w-10 rounded-xl"
+                width={40}
+                height={40}
+              />
+              <span>{comment.user.username}</span>
+            </div>
+            <span>{comment.content}</span>
+          </div>
+        );
+      })}
+      {/* End comment zone */}
     </div>
   );
 };
