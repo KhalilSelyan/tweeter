@@ -68,20 +68,20 @@ const Home: NextPage<{
       <Head>
         <title>@{data.username} | Profile </title>
       </Head>
-      <main className="flex flex-col">
-        <div className="flex flex-col border-slate-400 pt-16">
+      <main className="mx-auto flex max-w-screen-lg flex-col">
+        <div className="flex flex-col border-slate-400">
           <img
             src="https://i.pinimg.com/originals/4d/d5/85/4dd585d3e8a1a6b23f9a54e5a1076c8b.jpg"
             alt="Picture of the author"
-            className=" h-44 w-full object-cover md:h-96"
+            className="h-44 w-full object-cover md:h-[30rem]"
           />
 
           {/* profile box */}
-          <div className="relative mx-4 -mt-4 flex h-64 flex-col items-center justify-center gap-y-2 rounded-xl bg-white pt-16">
+          <div className="relative mx-4 -mt-4 flex h-64 flex-col items-center justify-center gap-y-2 rounded-xl bg-white pt-16 md:mx-0 md:h-80 md:pt-32">
             <img
               src={data.profileImageUrl}
               alt="Picture of the author"
-              className="absolute -top-16 left-0 right-0 m-auto aspect-square h-32 w-32 rounded-xl border-2 border-white object-cover  md:h-96"
+              className="absolute -top-16 left-0 right-0 m-auto aspect-square h-32 w-32 rounded-xl border-2 border-white object-cover md:-top-32  md:h-64 md:w-64"
             />
             <div className="flex flex-col items-center">
               <h1 className="text-2xl font-bold">{data.name}</h1>

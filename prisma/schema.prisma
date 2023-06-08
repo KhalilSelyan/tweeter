@@ -13,6 +13,7 @@ model User {
   id        String    @id @default(cuid())
   createdAt DateTime  @default(now())
   bio       String    @default("") @db.VarChar(255)
+  username  String
   posts     Post[]
   comments  Comment[]
   liked     Liked[]
@@ -22,7 +23,7 @@ model Post {
   id        String    @id @default(cuid())
   createdAt DateTime  @default(now())
   content   String    @db.VarChar(255)
-  image     String    @db.VarChar(255)
+  image     String    @default("") @db.VarChar(255)
   authorId  String
   user      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   liked     Liked[]
@@ -35,7 +36,7 @@ model Comment {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   content   String   @db.VarChar(255)
-  image     String   @db.VarChar(255)
+  image     String   @default("") @db.VarChar(255)
   authorId  String
   postId    String
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)

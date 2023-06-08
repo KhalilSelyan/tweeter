@@ -123,6 +123,20 @@ export const commentsRouter = createTRPCRouter({
         throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
       }
 
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: authorId,
+        },
+      });
+
+      const post = await ctx.prisma.post.findUnique({
+        where: {
+          id: input.postId,
+        },
+      });
+
+      if (!user || !post) return;
+
       const comment = await ctx.prisma.comment.create({
         data: {
           authorId,

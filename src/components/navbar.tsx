@@ -16,7 +16,6 @@ const Navbar = () => {
       <div>
         <Link href="/">
           <Image
-            priority
             src="/tweeter-small.svg"
             alt="Tweeter logo"
             height={32}

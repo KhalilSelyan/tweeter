@@ -29,7 +29,7 @@ const Twitbox = () => {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [ipfsUrl, setIpfsUrl] = useState("");
-  const submitButtonRef = React.useRef<HTMLButtonElement>(null);
+  const submitButtonReff = React.useRef<HTMLButtonElement>(null);
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {
@@ -37,7 +37,7 @@ const Twitbox = () => {
     } else if (event.target.files[0] !== undefined) {
       setFile(event.target.files[0]);
       setTimeout(() => {
-        submitButtonRef.current?.click();
+        submitButtonReff.current?.click();
       }, 250);
     }
   };
@@ -59,6 +59,8 @@ const Twitbox = () => {
     setIpfsUrl(url);
     setUploading(false);
   };
+
+  console.log(ipfsUrl);
 
   if (!user) return null;
   return (
@@ -122,7 +124,7 @@ const Twitbox = () => {
               onChange={handleChange}
             />
             <button
-              ref={submitButtonRef}
+              ref={submitButtonReff}
               type="submit"
               className="focus:shadow-outline hidden rounded bg-blue-600 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none disabled:bg-gray-400"
               disabled={!file || uploading}

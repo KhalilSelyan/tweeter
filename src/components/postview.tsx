@@ -136,7 +136,15 @@ export const PostView = (props: PostWithUser) => {
           key={comment.id}
           className="flex gap-x-2 rounded-xl bg-slate-100 px-2 py-2"
         >
+          <span>{comment.user.username}</span>
           <span>{comment.content}</span>
+          {comment.image && (
+            <Image
+              src={comment.image ?? ""}
+              alt=""
+              className="aspect-auto h-52 rounded-xl"
+            />
+          )}
         </div>
       ))}
       {/* End comment zone */}
@@ -169,11 +177,7 @@ export const PostView = (props: PostWithUser) => {
           />
           {ipfsUrl && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={ipfsUrl}
-              alt=""
-              className="aspect-auto w-full rounded-xl"
-            />
+            <img src={ipfsUrl} alt="" className="aspect-auto h-52 rounded-xl" />
           )}
           <hr className="my-4" />
           <div className="flex justify-between text-[#2F80ED]">
@@ -184,7 +188,7 @@ export const PostView = (props: PostWithUser) => {
               >
                 <label
                   title="Click to upload"
-                  htmlFor="button2"
+                  htmlFor="button23"
                   className="cursor-pointer items-center"
                 >
                   <IoImageOutline className="relative h-6 w-6" />
@@ -192,8 +196,8 @@ export const PostView = (props: PostWithUser) => {
                 <input
                   hidden
                   type="file"
-                  name="button2"
-                  id="button2"
+                  name="button23"
+                  id="button23"
                   onChange={handleChange}
                 />
                 <button
