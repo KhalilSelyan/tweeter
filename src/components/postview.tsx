@@ -220,11 +220,13 @@ export const PostView = (props: PostWithUser) => {
                 </div>
                 <div>
                   <span>{comment.content}</span>
-                  <img
-                    src={comment.image}
-                    className="aspect-auto h-48 rounded-xl object-cover"
-                    alt=""
-                  />
+                  {comment.image !== "" && (
+                    <img
+                      src={comment.image}
+                      className="aspect-auto h-48 rounded-xl object-cover"
+                      alt=""
+                    />
+                  )}
                 </div>
               </div>
             </div>
