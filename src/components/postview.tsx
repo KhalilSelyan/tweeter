@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
 import { IoImageOutline } from "react-icons/io5";
 import { MdOutlineModeComment } from "react-icons/md";
@@ -110,7 +110,7 @@ export const PostView = (props: PostWithUser) => {
       <div className="flex items-center justify-end gap-x-2 px-4 text-xs text-slate-400">
         <span>{post._count.liked ?? 0} likes</span>
         <span>{post._count.comments} comments</span>
-        <span>0 shares</span>
+        <span>0 bookmarks</span>
       </div>
       <hr />
       {/* icons container */}
@@ -203,7 +203,32 @@ export const PostView = (props: PostWithUser) => {
         </div>
       </div>
       {/* Comment Zone */}
-      {/* @ts-ignore */}
+      {/* dev */}
+      {/* <div className="flex flex-col p-2">
+        <div className="flex gap-x-2 rounded-xl">
+          <img
+            src="/tweeter-small.svg"
+            alt="Picture of the commenter"
+            className="h-10 w-10 rounded-xl border-2 object-scale-down "
+          />
+          <div className="flex w-full flex-col gap-y-4 rounded-xl bg-slate-100 p-2 text-sm">
+            <div className="flex flex-col gap-y-2 font-semibold md:flex-row md:gap-x-2">
+              <span>@khalilselyan</span>
+              <span className="font-light text-slate-400">
+                {format(new Date(), "d MMMM")} at {format(new Date(), "HH:mm")}
+              </span>
+            </div>
+            <div>
+              <span>Meowww</span>
+            </div>
+          </div>
+        </div>
+        <span className="ml-14 mt-2 flex cursor-pointer items-center gap-x-1 p-1 text-sm font-light text-slate-400">
+          <AiOutlineHeart className="text-lg hover:text-red-500" /> 12likes
+          <AiFillHeart className="text-lg hover:text-red-500" />
+        </span>
+      </div> */}
+      {/* end dev */}
       {post.comments.map((comment: Comment) => {
         return (
           <div className="flex flex-col p-2" key={comment.id}>
@@ -236,6 +261,11 @@ export const PostView = (props: PostWithUser) => {
                 </div>
               </div>
             </div>
+            <span className="ml-14 mt-2 flex cursor-pointer items-center gap-x-1 p-1 text-sm font-light text-slate-400">
+              <AiOutlineHeart className="text-lg hover:text-red-500" />{" "}
+              {comment._count.liked ?? 0}likes
+              {/* <AiFillHeart className="text-lg hover:text-red-500" /> */}
+            </span>
           </div>
         );
       })}

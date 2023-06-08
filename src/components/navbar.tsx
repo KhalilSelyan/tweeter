@@ -11,41 +11,40 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed left-0 top-0 z-10 flex h-14 w-full items-center justify-between bg-white px-4 py-2`}
+      className={`fixed left-0 top-0 z-10 flex h-14 w-full items-center justify-between bg-white px-4 pt-2`}
     >
-      <div>
+      <div className="pb-2">
         <Link href="/">
           <Image
-            src="/tweeter-small.svg"
+            src="/tweeter.svg"
             alt="Tweeter logo"
-            height={32}
-            width={32}
-            className="aspect-square h-10 w-10 rounded-xl"
+            height={64}
+            width={64}
+            className="aspect-square h-16 w-16 rounded-xl"
           />
         </Link>
+        <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
       </div>
-      <SignIn
-        appearance={{
-          layout: {
-            logoImageUrl: "/tweeter-small.svg",
-            logoPlacement: "inside",
-            socialButtonsVariant: "iconButton",
-            socialButtonsPlacement: "bottom",
-          },
-        }}
-        path="/sign-in"
-        routing="path"
-        signUpUrl="/sign-up"
-      />
 
+      <div className="hidden h-full items-center gap-x-4 md:flex">
+        <div className="relative flex h-full flex-col justify-center">
+          <div>Home</div>
+          <div className="absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500"></div>
+        </div>
+        <div className="relative flex h-full flex-col justify-center">
+          <div>Bookmark</div>
+          <div className="  absolute bottom-0 hidden h-1 w-full rounded-t-xl bg-blue-500"></div>
+        </div>
+        {/* <div className="bg-slate-100"></div> */}
+      </div>
       {!userData.isSignedIn ? (
         <SignInButton>
-          <button className="rounded-md bg-[#2e026d] px-4 py-2 text-white">
+          <button className="rounded-md bg-[#2e026d] px-4 pb-4 pt-2 text-white">
             Sign in
           </button>
         </SignInButton>
       ) : (
-        <div className="relative flex w-fit flex-col">
+        <div className="relative flex w-fit flex-col pb-2">
           <button
             id="dropdownUserAvatarButton"
             data-dropdown-toggle="dropdownAvatar"
