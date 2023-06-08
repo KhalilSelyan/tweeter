@@ -3,7 +3,6 @@ import { Comment } from "@prisma/client";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { AiOutlineHeart } from "react-icons/ai";
@@ -29,7 +28,6 @@ export const PostView = (props: PostWithUser) => {
   };
 
   // console.log(post);
-  const router = useRouter();
   const ctx = api.useContext();
   const { mutate, isLoading: isPosting } = api.comment.create.useMutation({
     onSuccess: () => {
@@ -37,11 +35,7 @@ export const PostView = (props: PostWithUser) => {
       commentRef.current.value = "";
       setFile(null);
       setIpfsUrl("");
-      if (router.pathname === "") void ctx.posts.getAll.invalidate();
-      if (router.pathname.includes("@"))
-        void ctx.posts.getPostsByUserId.invalidate();
-      if (router.pathname.includes(`/post/${post.id}`))
-        void ctx.posts.getById.invalidate();
+      void ctx.posts.invalidate();
     },
     onError: (err) => {
       const error = err.data?.zodError?.fieldErrors.content;
