@@ -52,7 +52,8 @@ export const likesRouter = createTRPCRouter({
   create: privateProcedure
     .input(
       z.object({
-        postId: z.string(),
+        postId: z.string().optional(),
+        commentId: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -62,11 +63,11 @@ export const likesRouter = createTRPCRouter({
       if (!success) {
         throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
       }
-
       const like = await ctx.prisma.liked.create({
         data: {
           userId,
           postId: input.postId,
+          commentId: input.commentId,
         },
       });
 
@@ -75,31 +76,54 @@ export const likesRouter = createTRPCRouter({
   delete: privateProcedure
     .input(
       z.object({
-        postId: z.string(),
+        postId: z.string().optional(),
+        commentId: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.userId;
 
-      const like = await ctx.prisma.liked.findFirst({
-        where: {
-          postId: input.postId,
-          userId,
-        },
-      });
+      if (!input.commentId) {
+        const like = await ctx.prisma.liked.findFirst({
+          where: {
+            postId: input.postId,
+            userId,
+          },
+        });
 
-      if (!like) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Like not found",
+        if (!like) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Like not found",
+          });
+        }
+
+        await ctx.prisma.liked.delete({
+          where: {
+            id: like.id,
+          },
+        });
+      } else if (!input.postId) {
+        const like = await ctx.prisma.liked.findFirst({
+          where: {
+            commentId: input.commentId,
+            userId,
+          },
+        });
+
+        if (!like) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Like not found",
+          });
+        }
+
+        await ctx.prisma.liked.delete({
+          where: {
+            id: like.id,
+          },
         });
       }
-
-      await ctx.prisma.liked.delete({
-        where: {
-          id: like.id,
-        },
-      });
 
       return { success: true };
     }),

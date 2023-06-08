@@ -308,7 +308,7 @@ export const PostView = (props: PostWithUser) => {
               <AiOutlineHeart
                 onClick={() => {
                   addLike({
-                    postId: comment.id,
+                    commentId: comment.id,
                   });
                 }}
                 className="text-lg hover:text-red-500"
@@ -323,7 +323,7 @@ export const PostView = (props: PostWithUser) => {
               <AiFillHeart
                 onClick={() => {
                   removeLike({
-                    postId: comment.id,
+                    commentId: comment.id,
                   });
                 }}
                 className=" text-lg hover:text-red-500"
