@@ -134,14 +134,16 @@ export const PostView = (props: PostWithUser) => {
 
   return (
     <div className="relative flex flex-col justify-center gap-y-2 rounded-xl border-2 border-gray-200 bg-white">
-      <BsTrash
-        onClick={() => {
-          deletePost({
-            postId: post.id,
-          });
-        }}
-        className="absolute right-2 top-2 h-5 w-5 cursor-pointer opacity-50 transition-opacity duration-200 hover:opacity-100"
-      />
+      {post.pauthorId === user!.id && (
+        <BsTrash
+          onClick={() => {
+            deletePost({
+              postId: post.id,
+            });
+          }}
+          className="absolute right-2 top-2 h-5 w-5 cursor-pointer opacity-50 transition-opacity duration-200 hover:opacity-100"
+        />
+      )}
       <div className="flex items-center gap-x-2 p-4">
         <Link href={`/@${author.username}`}>
           <Image
@@ -324,14 +326,16 @@ export const PostView = (props: PostWithUser) => {
                 className="h-10 w-10 rounded-xl"
               />
               <div className="relative flex w-full flex-col gap-y-4 rounded-xl bg-slate-100 p-2 text-sm">
-                <BsTrash
-                  onClick={() => {
-                    deleteComment({
-                      commentId: comment.id,
-                    });
-                  }}
-                  className="absolute right-2 top-2 h-5 w-5 cursor-pointer opacity-50 transition-opacity duration-200 hover:opacity-100"
-                />
+                {comment.cauthorId === user!.id && (
+                  <BsTrash
+                    onClick={() => {
+                      deleteComment({
+                        commentId: comment.id,
+                      });
+                    }}
+                    className="absolute right-2 top-2 h-5 w-5 cursor-pointer opacity-50 transition-opacity duration-200 hover:opacity-100"
+                  />
+                )}
 
                 <div className="flex flex-col gap-y-2 font-semibold md:flex-row md:gap-x-2">
                   <Link href={`/@${comment.user.username}`}>
