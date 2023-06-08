@@ -25,6 +25,7 @@ export default async function dan(req: NextApiRequest, res: NextApiResponse) {
           id: user.id,
           bio: "",
           username: user.username!,
+          profileImage: user.profileImageUrl,
           createdAt: new Date(user.createdAt),
         },
       });
