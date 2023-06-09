@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { BsBookmark, BsTrash } from "react-icons/bs";
+import { BsBookmark, BsFillBookmarkFill, BsTrash } from "react-icons/bs";
 import { IoImageOutline } from "react-icons/io5";
 import { MdOutlineModeComment } from "react-icons/md";
 import { TbRefresh } from "react-icons/tb";
@@ -28,7 +28,6 @@ export const PostView = (props: PostWithUser) => {
     });
   };
 
-  console.log(post);
   const ctx = api.useContext();
   const { mutate, isLoading: isPosting } = api.comment.create.useMutation({
     onSuccess: () => {
@@ -59,6 +58,16 @@ export const PostView = (props: PostWithUser) => {
     },
   });
   const { mutate: addBookMark } = api.bookmark.create.useMutation({
+    onSuccess: () => {
+      void ctx.bookmark.invalidate();
+    },
+    onError: (err) => {
+      const error = err.data?.zodError?.fieldErrors.content;
+      if (error && error[0]) toast.error(error[0]);
+      else toast.error("Something went wrong, please try again later");
+    },
+  });
+  const { mutate: removeBookMark } = api.bookmark.delete.useMutation({
     onSuccess: () => {
       void ctx.bookmark.invalidate();
     },
@@ -219,14 +228,25 @@ export const PostView = (props: PostWithUser) => {
         </div>
         <div
           onClick={() => {
-            addBookMark({
-              userId: user!.id,
-              postId: post.id,
-            });
+            bookMarkList?.postIds.includes(post.id) &&
+            bookMarkList.userIds.includes(user!.id)
+              ? removeBookMark({
+                  userId: user!.id,
+                  postId: post.id,
+                })
+              : addBookMark({
+                  userId: user!.id,
+                  postId: post.id,
+                });
           }}
           className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100"
         >
-          <BsBookmark className="h-5 w-5" />
+          {bookMarkList?.postIds.includes(post.id) &&
+          bookMarkList.userIds.includes(user!.id) ? (
+            <BsFillBookmarkFill className="h-5 w-5" />
+          ) : (
+            <BsBookmark className="h-5 w-5" />
+          )}
         </div>
       </div>
       {/* end icons container */}

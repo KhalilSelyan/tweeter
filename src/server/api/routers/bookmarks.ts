@@ -47,7 +47,13 @@ export const bookmarkRouter = createTRPCRouter({
         },
       });
 
-      return bookmarked;
+      const postIds = bookmarked.map((v) => v.postId);
+      const userIds = bookmarked.map((v) => v.userId);
+
+      return {
+        postIds,
+        userIds,
+      };
     }),
   create: privateProcedure
     .input(
@@ -76,15 +82,14 @@ export const bookmarkRouter = createTRPCRouter({
     .input(
       z.object({
         postId: z.string(),
+        userId: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const userId = ctx.userId;
-
       const bookmark = await ctx.prisma.bookmark.findFirst({
         where: {
           postId: input.postId,
-          userId,
+          userId: input.userId,
         },
       });
 
