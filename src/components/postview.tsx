@@ -60,6 +60,7 @@ export const PostView = (props: PostWithUser) => {
   const { mutate: addBookMark } = api.bookmark.create.useMutation({
     onSuccess: () => {
       void ctx.bookmark.invalidate();
+      void ctx.posts.invalidate();
     },
     onError: (err) => {
       const error = err.data?.zodError?.fieldErrors.content;
@@ -70,6 +71,7 @@ export const PostView = (props: PostWithUser) => {
   const { mutate: removeBookMark } = api.bookmark.delete.useMutation({
     onSuccess: () => {
       void ctx.bookmark.invalidate();
+      void ctx.posts.invalidate();
     },
     onError: (err) => {
       const error = err.data?.zodError?.fieldErrors.content;
