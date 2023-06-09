@@ -28,7 +28,7 @@ export const PostView = (props: PostWithUser) => {
     });
   };
 
-  // console.log(post);
+  console.log(post);
   const ctx = api.useContext();
   const { mutate, isLoading: isPosting } = api.comment.create.useMutation({
     onSuccess: () => {
@@ -148,8 +148,6 @@ export const PostView = (props: PostWithUser) => {
       userId: user!.id,
     });
 
-  console.log(bookMarkList);
-
   if (arrayLoading) return <></>;
 
   return (
@@ -192,8 +190,8 @@ export const PostView = (props: PostWithUser) => {
       )}
       <div className="flex items-center justify-end gap-x-2 px-4 text-xs text-slate-400">
         <span>{post._count.liked ?? 0} likes</span>
-        <span>{post._count.comments} comments</span>
-        <span>0 bookmarks</span>
+        <span>{post._count.comments ?? 0} comments</span>
+        <span>{post._count.Bookmark ?? 0} bookmarks</span>
       </div>
       <hr />
       {/* icons container */}

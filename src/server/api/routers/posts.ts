@@ -61,6 +61,7 @@ export const postsRouter = createTRPCRouter({
             select: {
               comments: true,
               liked: true,
+              Bookmark: true,
             },
           },
           user: false,
@@ -120,6 +121,7 @@ export const postsRouter = createTRPCRouter({
           select: {
             comments: true,
             liked: true,
+            Bookmark: true,
           },
         },
         user: false,
@@ -173,6 +175,7 @@ export const postsRouter = createTRPCRouter({
               select: {
                 comments: true,
                 liked: true,
+                Bookmark: true,
               },
             },
             user: false,
