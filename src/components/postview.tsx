@@ -335,7 +335,7 @@ export const PostView = (props: PostWithUser) => {
       </div>
       {/* Comment Zone */}
       {/* dev */}
-      <div className="flex flex-col p-2">
+      {/* <div className="flex flex-col p-2">
         <div className="flex gap-x-2 rounded-xl">
           <img
             src="/tweeter-small.svg"
@@ -366,7 +366,7 @@ export const PostView = (props: PostWithUser) => {
           <AiOutlineHeart className="text-lg hover:text-red-500" /> 12likes
           <AiFillHeart className="text-lg hover:text-red-500" />
         </span>
-      </div>
+      </div> */}
       {/* end dev */}
       {post.comments.map((comment: Comment) => {
         return (
