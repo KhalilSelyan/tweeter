@@ -27,7 +27,7 @@ const Post: NextPage<{
       <Head>
         <title>@{data.author.username} | Post </title>
       </Head>
-      <main className="flex max-w-screen-lg flex-col pt-16">
+      <main className="mx-auto flex max-w-screen-lg flex-col pt-16">
         <div className="flex flex-col gap-y-2 pb-20">
           <PostView
             key={data.author.id}
