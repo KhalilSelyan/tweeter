@@ -255,6 +255,14 @@ export const PostView = (props: PostWithUser) => {
       {/* end icons container */}
 
       {/* reply zone */}
+      {ipfsUrl && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={ipfsUrl}
+          alt=""
+          className="m-2 h-52 rounded-xl object-contain shadow-2xl md:mx-auto md:w-1/2"
+        />
+      )}
       <div className="flex gap-x-2 rounded-xl px-2 py-2">
         <Image
           src={user ? user.profileImageUrl : ""}
@@ -295,10 +303,6 @@ export const PostView = (props: PostWithUser) => {
               className="mr-2 h-6 w-6 cursor-pointer text-blue-500"
             />
           </form>
-          {ipfsUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={ipfsUrl} alt="" className="aspect-auto h-52 rounded-xl" />
-          )}
           <hr className="my-4" />
           <div className="flex justify-between text-[#2F80ED]">
             <div className="flex items-center gap-x-2 text-xs font-semibold">
