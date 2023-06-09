@@ -37,6 +37,7 @@ export const PostView = (props: PostWithUser) => {
       setFile(null);
       setIpfsUrl("");
       void ctx.posts.invalidate();
+      void ctx.comment.invalidate();
     },
     onError: (err) => {
       const error = err.data?.zodError?.fieldErrors.content;
@@ -49,6 +50,7 @@ export const PostView = (props: PostWithUser) => {
     onSuccess: () => {
       void ctx.likes.invalidate();
       void ctx.posts.invalidate();
+      void ctx.likes.likesByUserId.invalidate();
     },
     onError: (err) => {
       const error = err.data?.zodError?.fieldErrors.content;
@@ -58,8 +60,7 @@ export const PostView = (props: PostWithUser) => {
   });
   const { mutate: addBookMark } = api.bookmark.create.useMutation({
     onSuccess: () => {
-      void ctx.likes.invalidate();
-      void ctx.posts.invalidate();
+      void ctx.bookmark.invalidate();
     },
     onError: (err) => {
       const error = err.data?.zodError?.fieldErrors.content;
@@ -72,6 +73,7 @@ export const PostView = (props: PostWithUser) => {
     onSuccess: () => {
       void ctx.likes.invalidate();
       void ctx.posts.invalidate();
+      void ctx.likes.likesByUserId.invalidate();
     },
     onError: (err) => {
       const error = err.data?.zodError?.fieldErrors.content;
