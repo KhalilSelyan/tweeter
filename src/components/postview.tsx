@@ -10,7 +10,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsBookmark, BsFillBookmarkFill, BsTrash } from "react-icons/bs";
 import { IoImageOutline } from "react-icons/io5";
 import { MdOutlineModeComment } from "react-icons/md";
-import { TbRefresh } from "react-icons/tb";
+import { BsSendFill } from "react-icons/bs";
 import { Web3Storage } from "web3.storage";
 import { env } from "~/env.mjs";
 import { api, type RouterOutputs } from "~/utils/api";
@@ -158,6 +158,7 @@ export const PostView = (props: PostWithUser) => {
     api.bookmark.bookmarksByUserId.useQuery({
       userId: user!.id,
     });
+  const formRef = useRef<HTMLFormElement>(null);
 
   if (arrayLoading) return <></>;
 
@@ -264,15 +265,10 @@ export const PostView = (props: PostWithUser) => {
         />
         <div className="flex w-full items-center rounded-xl border border-slate-200 bg-slate-100 p-2">
           <form
-            className="w-full"
+            ref={formRef}
+            className="flex w-full"
             onSubmit={(e) => {
               e.preventDefault();
-              mutate({
-                postId: post.id,
-                content: commentRef.current?.value || "",
-                image: ipfsUrl,
-                userId: user?.id || "",
-              });
             }}
           >
             <input
@@ -281,10 +277,22 @@ export const PostView = (props: PostWithUser) => {
               placeholder={`Reply to @${author.username}`}
               className="w-full border-none bg-transparent text-slate-400 outline-none"
               onKeyDown={(e) => {
-                if (e.key === "Enter" && e.shiftKey) {
+                if ((e.key === "Enter" && e.shiftKey) || e.key === "Enter") {
                   e.preventDefault();
                 }
               }}
+            />
+
+            <BsSendFill
+              onClick={() => {
+                mutate({
+                  postId: post.id,
+                  content: commentRef.current?.value || "",
+                  image: ipfsUrl,
+                  userId: user?.id || "",
+                });
+              }}
+              className="mr-2 h-6 w-6 cursor-pointer text-blue-500"
             />
           </form>
           {ipfsUrl && (
@@ -327,7 +335,7 @@ export const PostView = (props: PostWithUser) => {
       </div>
       {/* Comment Zone */}
       {/* dev */}
-      {/* <div className="flex flex-col p-2">
+      <div className="flex flex-col p-2">
         <div className="flex gap-x-2 rounded-xl">
           <img
             src="/tweeter-small.svg"
@@ -358,7 +366,7 @@ export const PostView = (props: PostWithUser) => {
           <AiOutlineHeart className="text-lg hover:text-red-500" /> 12likes
           <AiFillHeart className="text-lg hover:text-red-500" />
         </span>
-      </div> */}
+      </div>
       {/* end dev */}
       {post.comments.map((comment: Comment) => {
         return (

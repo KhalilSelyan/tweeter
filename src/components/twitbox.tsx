@@ -60,7 +60,7 @@ const Twitbox = () => {
     setUploading(false);
   };
 
-  console.log(ipfsUrl);
+  // console.log(ipfsUrl);
 
   if (!user) return null;
   return (
