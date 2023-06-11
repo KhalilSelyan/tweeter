@@ -74,7 +74,7 @@ const Home: NextPage<{
     userId: data!.id,
   });
   console.log(following);
-  const { data: followedBy } = api.follow.followsByUserId.useQuery({
+  const { data: followedBy } = api.follow.userIdFollowedBy.useQuery({
     userId: data!.id,
   });
   console.log(followedBy);
