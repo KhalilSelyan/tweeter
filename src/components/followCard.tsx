@@ -67,7 +67,7 @@ const FollowCard = ({
       <div className="flow-root">
         <ul
           role="list"
-          className="no-scrollbar min-h-screen divide-y divide-gray-200 overflow-y-scroll md:h-64"
+          className="no-scrollbar min-h-screen divide-y divide-gray-200 overflow-y-scroll md:h-64 md:min-h-0"
         >
           {type === "follower" &&
             followers &&
