@@ -72,8 +72,10 @@ model Bookmark {
   userId    String
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  postId String @unique
+  postId String
   post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, postId])
   @@index([userId])
+  @@index([postId])
 }
