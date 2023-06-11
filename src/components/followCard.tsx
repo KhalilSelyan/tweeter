@@ -99,7 +99,7 @@ const FollowCard = ({
                         }}
                         className="inline-flex items-center text-base font-semibold text-gray-900 hover:text-blue-500"
                       >
-                        <AiFillCloseCircle className="h-6 w-6" />
+                        <AiFillCloseCircle className="h-6 w-6 cursor-pointer" />
                       </div>
                     )}
                   </div>
@@ -133,7 +133,7 @@ const FollowCard = ({
                         }}
                         className="inline-flex items-center text-base font-semibold text-gray-900 hover:text-blue-500 "
                       >
-                        <AiFillCloseCircle className="h-6 w-6" />
+                        <AiFillCloseCircle className="h-6 w-6 cursor-pointer" />
                       </div>
                     )}
                   </div>
