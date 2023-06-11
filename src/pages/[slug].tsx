@@ -110,10 +110,17 @@ const Home: NextPage<{
             </div>
             <div className="flex w-full justify-evenly">
               <div className="flex gap-x-1 text-sm text-gray-500">
-                <span className="font-bold text-black">2,569</span>Following
+                <span className="font-bold text-black">
+                  {String(following?.length) ?? 0}
+                </span>{" "}
+                Following
               </div>
               <div className="flex gap-x-1 text-sm text-gray-500">
-                <span className="font-bold text-black">10.8k</span>Followers
+                <span className="font-bold text-black">
+                  {" "}
+                  {String(followedBy?.length) ?? 0}
+                </span>
+                Followers
               </div>
             </div>
             {user.id === data.id && (
