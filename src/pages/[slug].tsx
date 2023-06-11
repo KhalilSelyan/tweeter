@@ -95,7 +95,11 @@ const Home: NextPage<{
       <main className="relative mx-auto flex h-full max-w-screen-lg flex-col">
         {type.enabled && (
           <div className="absolute z-50 w-full md:top-1/3 md:translate-x-1/3">
-            <FollowCard type={type.type} userId={data.id} />
+            <FollowCard
+              type={type.type}
+              profileId={data.id}
+              userId={user!.id}
+            />
           </div>
         )}
         <div className="flex flex-col border-slate-400">

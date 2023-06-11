@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { useUser } from "@clerk/nextjs";
 import { useAtom } from "jotai";
 import { toast } from "react-hot-toast";
 import { AiFillCloseCircle } from "react-icons/ai";
@@ -8,18 +9,20 @@ import { api } from "~/utils/api";
 const FollowCard = ({
   userId,
   type,
+  profileId,
 }: {
   userId: string;
+  profileId: string;
   type: "follower" | "following";
 }) => {
   const ctx = api.useContext();
   const { data: followers, isLoading: followersLoading } =
     api.follow.userIdFollowedBy.useQuery({
-      userId,
+      userId: profileId,
     });
   const { data: following, isLoading: followingLoading } =
     api.follow.followsByUserId.useQuery({
-      userId,
+      userId: profileId,
     });
 
   const { mutate: deleteFollow } = api.follow.delete.useMutation({
@@ -87,16 +90,18 @@ const FollowCard = ({
                         @{v.follower.username}
                       </p>
                     </div>
-                    <div
-                      onClick={() => {
-                        unfollowMe({
-                          followerUserId: v.follower.id,
-                        });
-                      }}
-                      className="inline-flex items-center text-base font-semibold text-gray-900 hover:text-blue-500"
-                    >
-                      <AiFillCloseCircle className="h-6 w-6" />
-                    </div>
+                    {userId === profileId && (
+                      <div
+                        onClick={() => {
+                          unfollowMe({
+                            followerUserId: v.follower.id,
+                          });
+                        }}
+                        className="inline-flex items-center text-base font-semibold text-gray-900 hover:text-blue-500"
+                      >
+                        <AiFillCloseCircle className="h-6 w-6" />
+                      </div>
+                    )}
                   </div>
                 </li>
               );
@@ -119,16 +124,18 @@ const FollowCard = ({
                         @{v.following.username}
                       </p>
                     </div>
-                    <div
-                      onClick={() => {
-                        deleteFollow({
-                          followedUserId: v.following.id,
-                        });
-                      }}
-                      className="inline-flex items-center text-base font-semibold text-gray-900 hover:text-blue-500 "
-                    >
-                      <AiFillCloseCircle className="h-6 w-6" />
-                    </div>
+                    {userId === profileId && (
+                      <div
+                        onClick={() => {
+                          deleteFollow({
+                            followedUserId: v.following.id,
+                          });
+                        }}
+                        className="inline-flex items-center text-base font-semibold text-gray-900 hover:text-blue-500 "
+                      >
+                        <AiFillCloseCircle className="h-6 w-6" />
+                      </div>
+                    )}
                   </div>
                 </li>
               );

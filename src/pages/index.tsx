@@ -9,7 +9,7 @@ import { PostView } from "~/components/postview";
 import { useAtom } from "jotai";
 import { homeAtom } from "~/jotai";
 
-export const Feed = () => {
+export const ExploreFeed = () => {
   const { isSignedIn } = useUser();
 
   const { data, isLoading: postsLoading } = api.posts.getAll.useQuery();
@@ -69,6 +69,38 @@ export const BookmarkFeed = () => {
   );
 };
 
+export const Feed = () => {
+  const { isSignedIn, user } = useUser();
+
+  const { data: posts, isLoading: postsLoading } =
+    api.posts.getPostsByFollowing.useQuery({
+      userId: user!.id,
+    });
+
+  if (postsLoading)
+    return (
+      <div className="absolute left-0 top-0 flex h-screen w-screen flex-col items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+
+  if (!posts)
+    return (
+      <div className="flex flex-col items-center justify-center rounded-xl border border-slate-400 p-4">
+        Something went wrong...
+      </div>
+    );
+
+  return (
+    <div className="flex flex-col gap-y-2 pb-20">
+      {isSignedIn &&
+        posts.map(({ post, author }) => (
+          <PostView key={post.id} post={post} author={author} />
+        ))}
+    </div>
+  );
+};
+
 const Home: NextPage = () => {
   const { isLoaded: userLoaded } = useUser();
   const [home, setHome] = useAtom(homeAtom);
@@ -87,7 +119,9 @@ const Home: NextPage = () => {
         <div className="flex flex-col gap-y-2 border-slate-400 px-4 pt-16">
           {/* <Uploader /> */}
           <Twitbox />
-          {home ? <Feed /> : <BookmarkFeed />}
+          {home === "bookmark" && <BookmarkFeed />}
+          {home === "home" && <Feed />}
+          {home === "explore" && <ExploreFeed />}
         </div>
         {/* push all the way down and keep there even on scroll */}
         <div className="fixed bottom-0 left-0 w-full">

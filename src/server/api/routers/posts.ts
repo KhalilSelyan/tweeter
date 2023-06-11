@@ -154,6 +154,70 @@ export const postsRouter = createTRPCRouter({
     });
     return addUserDataToPosts(posts);
   }),
+  getPostsByFollowing: publicProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      // Get the list of people the user is following
+      const followings = await ctx.prisma.followerRelation.findMany({
+        where: {
+          followerId: input.userId,
+        },
+      });
+
+      // Get the IDs of the people the user is following
+      const followingIds = followings.map((following) => following.followingId);
+
+      // Find posts where the authorId is in the list of followingIds
+      const posts = await ctx.prisma.post.findMany({
+        where: {
+          pauthorId: {
+            in: followingIds,
+          },
+        },
+        take: 100,
+        orderBy: {
+          createdAt: "desc",
+        },
+        select: {
+          _count: {
+            select: {
+              comments: true,
+              liked: true,
+              Bookmark: true,
+            },
+          },
+          user: false,
+          id: true,
+          content: true,
+          image: true,
+          createdAt: true,
+          pauthorId: true,
+          comments: {
+            orderBy: {
+              createdAt: "desc",
+            },
+            select: {
+              _count: {
+                select: {
+                  liked: true,
+                },
+              },
+              id: true,
+              content: true,
+              image: true,
+              createdAt: true,
+              cauthorId: true,
+              user: true,
+            },
+          },
+        },
+      });
+      return addUserDataToPosts(posts);
+    }),
   getPostsByUserId: publicProcedure
     .input(
       z.object({
