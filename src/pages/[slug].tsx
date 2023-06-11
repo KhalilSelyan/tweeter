@@ -112,98 +112,104 @@ const Home: NextPage<{
                 <span className="font-bold text-black">10.8k</span>Followers
               </div>
             </div>
-            <AiFillEdit
-              onClick={() => {
-                setIsOpen(true);
-              }}
-            />
-            <dialog
-              open={isOpen}
-              role="dialog"
-              className="fixed inset-0 z-10 overflow-y-auto bg-transparent"
-              aria-labelledby="modal-title"
-              aria-describedby="modal-description"
-            >
-              <div className="flex items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
-                <div
-                  className="fixed inset-0 transition-opacity"
-                  aria-hidden="true"
-                >
-                  <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                </div>
-                <span
-                  className="hidden sm:inline-block sm:h-screen sm:align-middle"
-                  aria-hidden="true"
-                >
-                  &#8203;
-                </span>
-                <div
-                  className="inline-block transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:align-middle"
+            {user.id === data.id && (
+              <>
+                <AiFillEdit
+                  onClick={() => {
+                    setIsOpen(true);
+                  }}
+                />
+                <dialog
+                  open={isOpen}
                   role="dialog"
-                  aria-modal="true"
-                  aria-labelledby="modal-headline"
+                  className="fixed inset-0 z-10 overflow-y-auto bg-transparent"
+                  aria-labelledby="modal-title"
+                  aria-describedby="modal-description"
                 >
-                  <div className="flex flex-col p-6 md:h-72 md:w-96">
-                    <div className="flex w-full sm:items-start md:items-center">
-                      <div className="flex w-full flex-col gap-y-2 px-2 text-left md:mt-3 md:text-center">
-                        <h3
-                          className="text-lg font-medium leading-6 text-gray-900"
-                          id="modal-headline"
+                  <div className="flex items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
+                    <div
+                      className="fixed inset-0 transition-opacity"
+                      aria-hidden="true"
+                    >
+                      <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+                    </div>
+                    <span
+                      className="hidden sm:inline-block sm:h-screen sm:align-middle"
+                      aria-hidden="true"
+                    >
+                      &#8203;
+                    </span>
+                    <div
+                      className="inline-block transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:align-middle"
+                      role="dialog"
+                      aria-modal="true"
+                      aria-labelledby="modal-headline"
+                    >
+                      <div className="flex flex-col p-6 md:h-72 md:w-96">
+                        <div className="flex w-full sm:items-start md:items-center">
+                          <div className="flex w-full flex-col gap-y-2 px-2 text-left md:mt-3 md:text-center">
+                            <h3
+                              className="text-lg font-medium leading-6 text-gray-900"
+                              id="modal-headline"
+                            >
+                              Edit Bio
+                            </h3>
+                            {/* <div className="mt-2"> */}
+                            <textarea
+                              ref={bioRef}
+                              className="flex w-full resize-none flex-col items-center  rounded-md border border-gray-300 px-4 pt-4 text-sm shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 md:h-48"
+                              placeholder="Bio"
+                              defaultValue={data.bio?.bio}
+                            />
+                            {/* </div> */}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                        <button
+                          type="button"
+                          className="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                          onClick={() => {
+                            if (!bioRef.current) return;
+                            mutate({
+                              id: data.id,
+                              bio: bioRef.current.value,
+                            });
+                          }}
                         >
-                          Edit Bio
-                        </h3>
-                        {/* <div className="mt-2"> */}
-                        <textarea
-                          ref={bioRef}
-                          className="flex w-full resize-none flex-col items-center  rounded-md border border-gray-300 px-4 pt-4 text-sm shadow-sm outline-none focus:border-indigo-500 focus:ring-indigo-500 md:h-48"
-                          placeholder="Bio"
-                          defaultValue={data.bio?.bio}
-                        />
-                        {/* </div> */}
+                          Save
+                        </button>
+                        <button
+                          type="button"
+                          className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:mt-0 sm:w-auto sm:text-sm"
+                          onClick={() => {
+                            setIsOpen(false);
+                          }}
+                        >
+                          Cancel
+                        </button>
                       </div>
                     </div>
                   </div>
-                  <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                    <button
-                      type="button"
-                      className="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                      onClick={() => {
-                        if (!bioRef.current) return;
-                        mutate({
-                          id: data.id,
-                          bio: bioRef.current.value,
-                        });
-                      }}
-                    >
-                      Save
-                    </button>
-                    <button
-                      type="button"
-                      className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:ml-3 sm:mt-0 sm:w-auto sm:text-sm"
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </dialog>
+                </dialog>
+              </>
+            )}
             <div className="text-center text-lg text-gray-500">
-              {data.bio?.bio || "Add Bio"}
+              {data.bio?.bio || "No bio"}
             </div>
-            <div
-              onClick={() => {
-                addFollow({
-                  followedUserId: user!.id,
-                });
-              }}
-              className="flex items-center rounded-md bg-blue-500 px-4 py-1 text-sm text-white"
-            >
-              <IoPersonAddSharp className="mr-2 inline-block" />
-              <div>Follow</div>
-            </div>
+            {user.id !== data.id && (
+              <div
+                onClick={() => {
+                  addFollow({
+                    followedUserId: data.id,
+                  });
+                }}
+                className="flex cursor-pointer items-center rounded-md bg-blue-500 px-4 py-1 text-sm text-white"
+              >
+                <IoPersonAddSharp className="mr-2 inline-block" />
+                <div>Follow</div>
+              </div>
+            )}
           </div>
           {/* end profile box */}
 
