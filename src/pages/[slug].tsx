@@ -12,6 +12,9 @@ import LoadingSpinner from "~/components/loading";
 import { PostView } from "~/components/postview";
 import { AiFillEdit } from "react-icons/ai";
 import { toast } from "react-hot-toast";
+import FollowCard from "~/components/followCard";
+import { useAtom } from "jotai";
+import { typeAtom } from "~/jotai";
 
 const ProfileFeed = (props: { userId: string; feedType: string }) => {
   const { data, isLoading } = api.posts.getPostsByUserId.useQuery({
@@ -73,11 +76,13 @@ const Home: NextPage<{
   const { data: following } = api.follow.followsByUserId.useQuery({
     userId: data!.id,
   });
-  console.log(following);
+
   const { data: followedBy } = api.follow.userIdFollowedBy.useQuery({
     userId: data!.id,
   });
-  console.log(followedBy);
+
+  const [type, setType] = useAtom(typeAtom);
+
   if (!data) return <div>Something went wrong...</div>;
 
   if (!userLoaded || !user) return <div />;
@@ -87,7 +92,12 @@ const Home: NextPage<{
       <Head>
         <title>@{data.username} | Profile </title>
       </Head>
-      <main className="mx-auto flex max-w-screen-lg flex-col">
+      <main className="relative mx-auto flex h-full max-w-screen-lg flex-col">
+        {type.enabled && (
+          <div className="absolute z-50 w-full md:top-1/3 md:translate-x-1/3">
+            <FollowCard type={type.type} userId={data.id} />
+          </div>
+        )}
         <div className="flex flex-col border-slate-400">
           <img
             src="https://i.pinimg.com/originals/4d/d5/85/4dd585d3e8a1a6b23f9a54e5a1076c8b.jpg"
@@ -109,14 +119,30 @@ const Home: NextPage<{
               </h1>
             </div>
             <div className="flex w-full justify-evenly">
-              <div className="flex gap-x-1 text-sm text-gray-500">
-                <span className="font-bold text-black">
+              <div
+                onClick={() => {
+                  setType({
+                    enabled: true,
+                    type: "following",
+                  });
+                }}
+                className="flex cursor-pointer gap-x-1 text-sm text-gray-500 hover:text-blue-500 hover:underline"
+              >
+                <span className="font-bold text-black hover:text-blue-500">
                   {String(following?.length) ?? 0}
                 </span>{" "}
                 Following
               </div>
-              <div className="flex gap-x-1 text-sm text-gray-500">
-                <span className="font-bold text-black">
+              <div
+                onClick={() => {
+                  setType({
+                    enabled: true,
+                    type: "follower",
+                  });
+                }}
+                className="flex cursor-pointer gap-x-1 text-sm text-gray-500 hover:text-blue-500 hover:underline"
+              >
+                <span className="font-bold text-black hover:text-blue-500">
                   {" "}
                   {String(followedBy?.length) ?? 0}
                 </span>
@@ -226,7 +252,7 @@ const Home: NextPage<{
 
           {/* tweets/replies/media/likes */}
 
-          <ul className="mx-4 mt-4 flex flex-col rounded-xl bg-white">
+          {/* <ul className="mx-4 mt-4 flex flex-col rounded-xl bg-white">
             <li
               className={`relative flex-1 px-6 py-4 text-sm font-medium text-gray-500 ${
                 selectedTab === "tweets" && "text-blue-500"
@@ -279,15 +305,8 @@ const Home: NextPage<{
               ></div>
               Likes
             </li>
-          </ul>
+          </ul> */}
           {/* end tweets/replies/media/likes */}
-
-          {/* <div className="flex items-center p-4 text-sm ">
-            <TbRefresh className="mr-1 text-gray-500" />
-            <div className="text-center text-gray-500">
-              {user?.fullName} retweeted
-            </div>
-          </div> */}
         </div>
         <div className="px-4 py-2">
           <ProfileFeed feedType={selectedTab} userId={data.id} />

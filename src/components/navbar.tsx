@@ -51,24 +51,35 @@ const Navbar = () => {
 
       <div className="hidden h-full items-center gap-x-4 md:flex">
         <div
-          onClick={() => setHome(true)}
+          onClick={() => setHome("home")}
           className="relative flex h-full cursor-pointer flex-col justify-center"
         >
           <div>Home</div>
           <div
             className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 ${
-              !home && "hidden"
+              home !== "home" && "hidden"
             }`}
           ></div>
         </div>
         <div
-          onClick={() => setHome(false)}
+          onClick={() => setHome("explore")}
+          className="relative flex h-full cursor-pointer flex-col justify-center"
+        >
+          <div>Explore</div>
+          <div
+            className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 ${
+              home !== "explore" && "hidden"
+            }`}
+          ></div>
+        </div>
+        <div
+          onClick={() => setHome("bookmark")}
           className="relative flex h-full cursor-pointer flex-col justify-center"
         >
           <div>Bookmark</div>
           <div
             className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 ${
-              home && "hidden"
+              home !== "bookmark" && "hidden"
             }`}
           ></div>
         </div>
