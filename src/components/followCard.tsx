@@ -89,8 +89,8 @@ const FollowCard = ({
                     </div>
                     <div
                       onClick={() => {
-                        deleteFollow({
-                          followedUserId: v.follower.id,
+                        unfollowMe({
+                          followerUserId: v.follower.id,
                         });
                       }}
                       className="inline-flex items-center text-base font-semibold text-gray-900 hover:text-blue-500"
@@ -121,8 +121,8 @@ const FollowCard = ({
                     </div>
                     <div
                       onClick={() => {
-                        unfollowMe({
-                          followerUserId: v.following.id,
+                        deleteFollow({
+                          followedUserId: v.following.id,
                         });
                       }}
                       className="inline-flex items-center text-base font-semibold text-gray-900 hover:text-blue-500 "
