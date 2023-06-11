@@ -76,9 +76,16 @@ export const bookmarkRouter = createTRPCRouter({
         },
       });
 
-      // const postIds = bookmarked.map((v) => v.postId);
-      // const userIds = bookmarked.map((v) => v.userId);
-      return addUserDataToPosts(bookmarked.map((v) => v.post));
+      const postIds = bookmarked.map((v) => v.postId);
+      const userIds = bookmarked.map((v) => v.userId);
+      const returnedPosts = await addUserDataToPosts(
+        bookmarked.map((v) => v.post)
+      );
+      return {
+        postIds,
+        userIds,
+        returnedPosts,
+      };
     }),
   create: privateProcedure
     .input(

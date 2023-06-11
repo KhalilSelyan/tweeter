@@ -62,7 +62,7 @@ export const BookmarkFeed = () => {
   return (
     <div className="flex flex-col gap-y-2 pb-20">
       {isSignedIn &&
-        bookmarks.map(({ post, author }) => (
+        bookmarks.returnedPosts.map(({ post, author }) => (
           <PostView key={post.id} post={post} author={author} />
         ))}
     </div>
