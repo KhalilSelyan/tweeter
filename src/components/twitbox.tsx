@@ -132,8 +132,8 @@ const Twitbox = () => {
               {uploading ? "Uploading..." : "Upload"}
             </button>
           </form>
-          <BiWorld className="h-6 w-6 " />
-          <span>Everyone can reply</span>
+          {/* <BiWorld className="h-6 w-6 " />
+          <span>Everyone can reply</span> */}
         </div>
         <button
           onClick={() => {
