@@ -59,6 +59,21 @@ const Home: NextPage<{
     },
   });
 
+  const { mutate: addFollow } = api.follow.create.useMutation({
+    onSuccess: () => {
+      void ctx.follow.invalidate();
+    },
+    onError: (err) => {
+      const error = err.data?.zodError?.fieldErrors.content;
+      if (error && error[0]) toast.error(error[0]);
+      else toast.error("Something went wrong, please try again later");
+    },
+  });
+
+  const { data: follow } = api.follow.followsByUserId.useQuery({
+    userId: data!.id,
+  });
+  console.log(follow);
   if (!data) return <div>Something went wrong...</div>;
 
   if (!userLoaded || !user) return <div />;
@@ -178,7 +193,14 @@ const Home: NextPage<{
             <div className="text-center text-lg text-gray-500">
               {data.bio?.bio || "Add Bio"}
             </div>
-            <div className="flex items-center rounded-md bg-blue-500 px-4 py-1 text-sm text-white">
+            <div
+              onClick={() => {
+                addFollow({
+                  followedUserId: user!.id,
+                });
+              }}
+              className="flex items-center rounded-md bg-blue-500 px-4 py-1 text-sm text-white"
+            >
               <IoPersonAddSharp className="mr-2 inline-block" />
               <div>Follow</div>
             </div>

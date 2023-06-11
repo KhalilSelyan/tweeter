@@ -3,7 +3,7 @@ import { postsRouter } from "./routers/posts";
 import { profileRouter } from "./routers/profile";
 import { commentsRouter } from "./routers/comments";
 import { likesRouter } from "./routers/likes";
-import { userRouter } from "./routers/user";
+import { followRouter } from "./routers/follow";
 import { bookmarkRouter } from "./routers/bookmarks";
 
 /**
@@ -16,7 +16,7 @@ export const appRouter = createTRPCRouter({
   profile: profileRouter,
   comment: commentsRouter,
   likes: likesRouter,
-  users: userRouter,
+  follow: followRouter,
   bookmark: bookmarkRouter,
 });
 
