@@ -3,7 +3,7 @@ import { useUser } from "@clerk/nextjs";
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { api } from "~/utils/api";
 import NavButtons from "~/components/navbuttons";
-import { IoPersonAddSharp } from "react-icons/io5";
+import { IoPersonAddSharp, IoPersonRemoveSharp } from "react-icons/io5";
 import { useRef, useState } from "react";
 import { TbRefresh } from "react-icons/tb";
 import Head from "next/head";
@@ -72,6 +72,16 @@ const Home: NextPage<{
       else toast.error("Something went wrong, please try again later");
     },
   });
+  const { mutate: removeFollow } = api.follow.delete.useMutation({
+    onSuccess: () => {
+      void ctx.follow.invalidate();
+    },
+    onError: (err) => {
+      const error = err.data?.zodError?.fieldErrors.content;
+      if (error && error[0]) toast.error(error[0]);
+      else toast.error("Something went wrong, please try again later");
+    },
+  });
 
   const { data: following } = api.follow.followsByUserId.useQuery({
     userId: data!.id,
@@ -80,6 +90,8 @@ const Home: NextPage<{
   const { data: followedBy } = api.follow.userIdFollowedBy.useQuery({
     userId: data!.id,
   });
+
+  const followedByIds = followedBy?.map((v) => v.followerId);
 
   const [type, setType] = useAtom(typeAtom);
 
@@ -241,14 +253,29 @@ const Home: NextPage<{
             {user.id !== data.id && (
               <div
                 onClick={() => {
-                  addFollow({
-                    followedUserId: data.id,
-                  });
+                  if (followedByIds?.includes(user.id)) {
+                    addFollow({
+                      followedUserId: data.id,
+                    });
+                  } else {
+                    removeFollow({
+                      followedUserId: data.id,
+                    });
+                  }
                 }}
                 className="flex cursor-pointer items-center rounded-md bg-blue-500 px-4 py-1 text-sm text-white"
               >
-                <IoPersonAddSharp className="mr-2 inline-block" />
-                <div>Follow</div>
+                {followedByIds?.includes(user.id) ? (
+                  <>
+                    <IoPersonAddSharp className="mr-2 inline-block" />
+                    <div>Follow</div>
+                  </>
+                ) : (
+                  <>
+                    <IoPersonRemoveSharp className="mr-2 inline-block" />
+                    <div>Unfollow</div>
+                  </>
+                )}
               </div>
             )}
           </div>
