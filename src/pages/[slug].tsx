@@ -70,10 +70,14 @@ const Home: NextPage<{
     },
   });
 
-  const { data: follow } = api.follow.followsByUserId.useQuery({
+  const { data: following } = api.follow.followsByUserId.useQuery({
     userId: data!.id,
   });
-  console.log(follow);
+  console.log(following);
+  const { data: followedBy } = api.follow.followsByUserId.useQuery({
+    userId: data!.id,
+  });
+  console.log(followedBy);
   if (!data) return <div>Something went wrong...</div>;
 
   if (!userLoaded || !user) return <div />;
