@@ -3,6 +3,7 @@ import { SignIn, SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import { useAtom } from "jotai";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { homeAtom } from "~/jotai";
 
@@ -11,6 +12,7 @@ const Navbar = () => {
   const profilePicture = userData.user?.profileImageUrl;
 
   const [home, setHome] = useAtom(homeAtom);
+  const router = useRouter();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -51,7 +53,10 @@ const Navbar = () => {
 
       <div className="hidden h-full items-center gap-x-4 md:flex">
         <div
-          onClick={() => setHome("home")}
+          onClick={() => {
+            if (router.pathname !== "/") router.push("/");
+            setHome("home");
+          }}
           className="relative flex h-full cursor-pointer flex-col justify-center"
         >
           <div>Home</div>
@@ -62,7 +67,10 @@ const Navbar = () => {
           ></div>
         </div>
         <div
-          onClick={() => setHome("explore")}
+          onClick={() => {
+            if (router.pathname !== "/") router.push("/");
+            setHome("explore");
+          }}
           className="relative flex h-full cursor-pointer flex-col justify-center"
         >
           <div>Explore</div>
@@ -73,7 +81,10 @@ const Navbar = () => {
           ></div>
         </div>
         <div
-          onClick={() => setHome("bookmark")}
+          onClick={() => {
+            if (router.pathname !== "/") router.push("/");
+            setHome("bookmark");
+          }}
           className="relative flex h-full cursor-pointer flex-col justify-center"
         >
           <div>Bookmark</div>

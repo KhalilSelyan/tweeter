@@ -45,7 +45,7 @@ const FollowCard = ({
 
   const [fType, setType] = useAtom(typeAtom);
 
-  if (followersLoading || followingLoading) return <></>;
+  // if (followersLoading || followingLoading) return <></>;
 
   return (
     <div className="absolute z-10 w-full max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow  sm:p-8">
@@ -67,8 +67,404 @@ const FollowCard = ({
       <div className="flow-root">
         <ul
           role="list"
-          className="no-scrollbar min-h-screen divide-y divide-gray-200 overflow-y-scroll md:h-64 md:min-h-0"
+          className="no-scrollbar h-[75dvh] divide-y divide-gray-200 overflow-y-scroll md:h-64 md:min-h-0"
         >
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
+          <li className="py-3 sm:py-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="/docs/images/people/profile-picture-1.jpg"
+                  alt="Neil image"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-gray-900">
+                  Neil Sims
+                </p>
+                <p className="truncate text-sm text-gray-500 ">
+                  email@windster.com
+                </p>
+              </div>
+              <div className="inline-flex items-center text-base font-semibold text-gray-900 ">
+                $320
+              </div>
+            </div>
+          </li>
           {type === "follower" &&
             followers &&
             followers.map((v) => {
