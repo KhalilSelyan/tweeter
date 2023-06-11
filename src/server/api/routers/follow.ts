@@ -102,4 +102,35 @@ export const followRouter = createTRPCRouter({
 
       return { success: true };
     }),
+  unfollowMe: privateProcedure
+    .input(
+      z.object({
+        followerUserId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const follow = await ctx.prisma.followerRelation.findFirst({
+        where: {
+          AND: {
+            followerId: input.followerUserId,
+            followingId: ctx.userId,
+          },
+        },
+      });
+
+      if (!follow) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Follow not found",
+        });
+      }
+
+      await ctx.prisma.followerRelation.delete({
+        where: {
+          id: follow.id,
+        },
+      });
+
+      return { success: true };
+    }),
 });

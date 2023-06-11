@@ -32,6 +32,16 @@ const FollowCard = ({
       else toast.error("Something went wrong, please try again later");
     },
   });
+  const { mutate: unfollowMe } = api.follow.unfollowMe.useMutation({
+    onSuccess: () => {
+      void ctx.follow.invalidate();
+    },
+    onError: (err) => {
+      const error = err.data?.zodError?.fieldErrors.content;
+      if (error && error[0]) toast.error(error[0]);
+      else toast.error("Something went wrong, please try again later");
+    },
+  });
 
   const [fType, setType] = useAtom(typeAtom);
 
@@ -40,8 +50,8 @@ const FollowCard = ({
   return (
     <div className="absolute z-10 w-full max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow  sm:p-8">
       <div className="mb-4 flex items-center justify-between">
-        <h5 className="text-xl font-bold leading-none text-gray-900 ">
-          Followers / Following
+        <h5 className="text-xl font-bold capitalize leading-none text-gray-900">
+          {fType.type}
         </h5>
 
         <AiFillCloseCircle
@@ -111,8 +121,8 @@ const FollowCard = ({
                     </div>
                     <div
                       onClick={() => {
-                        deleteFollow({
-                          followedUserId: v.following.id,
+                        unfollowMe({
+                          followerUserId: v.following.id,
                         });
                       }}
                       className="inline-flex items-center text-base font-semibold text-gray-900 hover:text-blue-500 "
