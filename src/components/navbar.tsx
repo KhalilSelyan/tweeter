@@ -1,12 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import { SignIn, SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import { useAtom } from "jotai";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { homeAtom } from "~/jotai";
 
 const Navbar = () => {
   const userData = useUser();
   const profilePicture = userData.user?.profileImageUrl;
+
+  const [home, setHome] = useAtom(homeAtom);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -46,19 +50,32 @@ const Navbar = () => {
       </div>
 
       <div className="hidden h-full items-center gap-x-4 md:flex">
-        <div className="relative flex h-full flex-col justify-center">
+        <div
+          onClick={() => setHome(true)}
+          className="relative flex h-full cursor-pointer flex-col justify-center"
+        >
           <div>Home</div>
-          <div className="absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500"></div>
+          <div
+            className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 ${
+              !home && "hidden"
+            }`}
+          ></div>
         </div>
-        <div className="relative flex h-full flex-col justify-center">
+        <div
+          onClick={() => setHome(false)}
+          className="relative flex h-full cursor-pointer flex-col justify-center"
+        >
           <div>Bookmark</div>
-          <div className="  absolute bottom-0 hidden h-1 w-full rounded-t-xl bg-blue-500"></div>
+          <div
+            className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 ${
+              home && "hidden"
+            }`}
+          ></div>
         </div>
-        {/* <div className="bg-slate-100"></div> */}
       </div>
       {!userData.isSignedIn ? (
         <SignInButton>
-          <button className="rounded-md bg-[#2e026d] px-4 pb-4 pt-2 text-white">
+          <button className="mb-2 rounded-md bg-blue-500 px-4 py-2 text-white">
             Sign in
           </button>
         </SignInButton>
