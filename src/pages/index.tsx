@@ -77,24 +77,38 @@ export const Feed = () => {
       userId: user!.id,
     });
 
-  if (postsLoading)
+  const { data: myPosts, isLoading: myPostsLoading } =
+    api.posts.getPostsByUserId.useQuery({
+      userId: user!.id,
+    });
+
+  if (postsLoading || myPostsLoading)
     return (
       <div className="absolute left-0 top-0 flex h-screen w-screen flex-col items-center justify-center">
         <LoadingSpinner />
       </div>
     );
 
-  if (!posts)
+  if (!posts || !myPosts)
     return (
       <div className="flex flex-col items-center justify-center rounded-xl border border-slate-400 p-4">
         Something went wrong...
       </div>
     );
 
+  const postsWithMyPosts = [...posts, ...myPosts];
+  // Sort by createdAt
+  const orderedPosts = postsWithMyPosts.sort((a, b) => {
+    return (
+      new Date(b.post.createdAt).getTime() -
+      new Date(a.post.createdAt).getTime()
+    );
+  });
+
   return (
     <div className="flex flex-col gap-y-2 pb-20">
       {isSignedIn &&
-        posts.map(({ post, author }) => (
+        orderedPosts.map(({ post, author }) => (
           <PostView key={post.id} post={post} author={author} />
         ))}
     </div>
