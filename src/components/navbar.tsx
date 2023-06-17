@@ -63,7 +63,7 @@ const Navbar = () => {
           <div
             className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 ${
               home !== "home" && "hidden"
-            } ${router.pathname === "/" && "hidden"}`}
+            } ${router.pathname !== "/" && "hidden"}`}
           ></div>
         </div>
         <div
@@ -77,7 +77,7 @@ const Navbar = () => {
           <div
             className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 ${
               home !== "explore" && "hidden"
-            }${router.pathname === "/" && "hidden"}`}
+            }${router.pathname !== "/" && "hidden"}`}
           ></div>
         </div>
         <div
@@ -91,7 +91,7 @@ const Navbar = () => {
           <div
             className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 ${
               home !== "bookmark" && "hidden"
-            }${router.pathname === "/" && "hidden"}`}
+            }${router.pathname !== "/" && "hidden"}`}
           ></div>
         </div>
       </div>

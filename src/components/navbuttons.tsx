@@ -16,7 +16,7 @@ const NavButtons = () => {
         }}
         className={`flex h-10 grow items-center justify-center rounded-xl   ${
           home === "home" && "bg-gray-100 text-blue-500"
-        } ${router.pathname === "/" && "text-slate-400"}  `}
+        } ${router.pathname !== "/" && "text-slate-400"}  `}
       >
         <AiFillHome className={`h-6  w-6 `} />
       </div>
@@ -27,7 +27,7 @@ const NavButtons = () => {
         }}
         className={`flex h-10 grow items-center justify-center rounded-xl  ${
           home === "explore" && "bg-gray-100 text-blue-500"
-        } ${router.pathname === "/" && "text-slate-400"} `}
+        } ${router.pathname !== "/" && "text-slate-400"} `}
       >
         <FaCompass className={`h-6  w-6 `} />
       </div>
@@ -38,7 +38,7 @@ const NavButtons = () => {
         }}
         className={`flex h-10 grow items-center justify-center rounded-xl  ${
           home === "bookmark" && "bg-gray-100 text-blue-500"
-        } ${router.pathname === "/" && "text-slate-400"} `}
+        } ${router.pathname !== "/" && "text-slate-400"} `}
       >
         <BsBookmarkCheckFill className={`h-6  w-6`} />
       </div>
