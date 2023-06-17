@@ -58,7 +58,7 @@ export const bookmarkRouter = createTRPCRouter({
       const userId = input.userId;
       const bookmarked = await ctx.prisma.bookmark.findMany({
         where: {
-          userId: userId!,
+          userId: userId,
         },
         include: {
           post: {
@@ -95,7 +95,7 @@ export const bookmarkRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const userId = ctx.userId;
+      const userId = input.userId;
       const { success } = await rateLimiter.limit(userId);
 
       if (!success) {

@@ -55,6 +55,9 @@ export const PostView = (props: PostWithUser) => {
       const error = err.data?.zodError?.fieldErrors.content;
       if (error && error[0]) toast.error(error[0]);
       else toast.error("Something went wrong, please try again later");
+      void ctx.likes.invalidate();
+      void ctx.posts.invalidate();
+      void ctx.likes.likesByUserId.invalidate();
     },
   });
   const { mutate: addBookMark } = api.bookmark.create.useMutation({
@@ -66,6 +69,8 @@ export const PostView = (props: PostWithUser) => {
       const error = err.data?.zodError?.fieldErrors.content;
       if (error && error[0]) toast.error(error[0]);
       else toast.error("Something went wrong, please try again later");
+      void ctx.bookmark.invalidate();
+      void ctx.posts.invalidate();
     },
   });
   const { mutate: removeBookMark } = api.bookmark.delete.useMutation({
@@ -77,6 +82,8 @@ export const PostView = (props: PostWithUser) => {
       const error = err.data?.zodError?.fieldErrors.content;
       if (error && error[0]) toast.error(error[0]);
       else toast.error("Something went wrong, please try again later");
+      void ctx.bookmark.invalidate();
+      void ctx.posts.invalidate();
     },
   });
 
