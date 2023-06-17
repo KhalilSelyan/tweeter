@@ -21,7 +21,12 @@ const Navbar = () => {
       className={`fixed left-0 top-0 z-10 flex h-14 w-full items-center justify-between bg-white px-4 pt-2`}
     >
       <div className="pb-2">
-        <Link href="/">
+        <Link
+          href="/"
+          onClick={() => {
+            setHome("explore");
+          }}
+        >
           <svg
             className="aspect-square h-16 w-16 rounded-xl"
             width="126"
