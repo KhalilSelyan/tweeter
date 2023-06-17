@@ -61,9 +61,10 @@ const Navbar = () => {
         >
           <div>Home</div>
           <div
-            className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 ${
-              home !== "home" && "hidden"
-            } ${router.pathname !== "/" && "hidden"}`}
+            className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 
+            ${router.pathname !== "/" && "hidden"}
+            ${home !== "home" && "hidden"}
+            `}
           ></div>
         </div>
         <div
@@ -75,9 +76,10 @@ const Navbar = () => {
         >
           <div>Explore</div>
           <div
-            className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 ${
-              home !== "explore" && "hidden"
-            }${router.pathname !== "/" && "hidden"}`}
+            className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 
+            ${router.pathname !== "/" && "hidden"}
+            ${home !== "explore" && "hidden"}
+            `}
           ></div>
         </div>
         <div
@@ -89,9 +91,10 @@ const Navbar = () => {
         >
           <div>Bookmark</div>
           <div
-            className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 ${
-              home !== "bookmark" && "hidden"
-            }${router.pathname !== "/" && "hidden"}`}
+            className={`absolute bottom-0 h-1 w-full rounded-t-xl bg-blue-500 
+            ${router.pathname !== "/" && "hidden"}
+            ${home !== "bookmark" && "hidden"}
+            `}
           ></div>
         </div>
       </div>

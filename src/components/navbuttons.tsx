@@ -14,9 +14,10 @@ const NavButtons = () => {
           if (router.pathname !== "/") router.push("/");
           setHome("home");
         }}
-        className={`flex h-10 grow items-center justify-center rounded-xl   ${
-          home === "home" && "bg-gray-100 text-blue-500"
-        } ${router.pathname !== "/" && "text-slate-400"}  `}
+        className={`flex h-10 grow items-center justify-center rounded-xl   
+        ${home === "home" && "bg-gray-100 text-blue-500"} 
+        ${router.pathname !== "/" && "bg-white text-slate-400"}  
+        `}
       >
         <AiFillHome className={`h-6  w-6 `} />
       </div>
@@ -25,9 +26,10 @@ const NavButtons = () => {
           if (router.pathname !== "/") router.push("/");
           setHome("explore");
         }}
-        className={`flex h-10 grow items-center justify-center rounded-xl  ${
-          home === "explore" && "bg-gray-100 text-blue-500"
-        } ${router.pathname !== "/" && "text-slate-400"} `}
+        className={`flex h-10 grow items-center justify-center rounded-xl  
+          ${home === "explore" && "bg-gray-100 text-blue-500"} 
+          ${router.pathname !== "/" && "bg-white text-slate-400"}  
+          `}
       >
         <FaCompass className={`h-6  w-6 `} />
       </div>
@@ -36,9 +38,10 @@ const NavButtons = () => {
           if (router.pathname !== "/") router.push("/");
           setHome("bookmark");
         }}
-        className={`flex h-10 grow items-center justify-center rounded-xl  ${
-          home === "bookmark" && "bg-gray-100 text-blue-500"
-        } ${router.pathname !== "/" && "text-slate-400"} `}
+        className={`flex h-10 grow items-center justify-center rounded-xl  
+        ${home === "bookmark" && "bg-gray-100 text-blue-500"}
+        ${router.pathname !== "/" && "bg-white text-slate-400"}  
+        `}
       >
         <BsBookmarkCheckFill className={`h-6  w-6`} />
       </div>
