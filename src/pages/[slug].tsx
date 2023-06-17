@@ -240,6 +240,10 @@ const Home: NextPage<{
                         id: data.id,
                         profilePicture: ipfsUrl,
                       });
+
+                      user?.setProfileImage({
+                        file: file,
+                      });
                     }}
                   >
                     Save
