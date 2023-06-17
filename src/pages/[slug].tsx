@@ -244,6 +244,8 @@ const Home: NextPage<{
                       user?.setProfileImage({
                         file: file,
                       });
+
+                      setIsProfileImageOpen(false);
                     }}
                   >
                     Save
