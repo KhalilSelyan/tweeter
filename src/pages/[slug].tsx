@@ -179,6 +179,8 @@ const Home: NextPage<{
           <dialog
             open={isProfileImageOpen}
             role="dialog"
+            onCancel={() => setIsProfileImageOpen(false)}
+            onAbort={() => setIsProfileImageOpen(false)}
             className="fixed inset-0 z-20 overflow-y-auto bg-transparent"
             aria-labelledby="modal-title"
             aria-describedby="modal-description"
@@ -205,6 +207,7 @@ const Home: NextPage<{
                 <form
                   className="flex w-full items-center justify-center gap-x-2 p-4"
                   onSubmit={handleSubmit}
+                  onAbort={() => setIsProfileImageOpen(false)}
                 >
                   <label
                     title="Click to upload"
@@ -220,6 +223,7 @@ const Home: NextPage<{
                     name="button2333"
                     id="button2333"
                     onChange={handleChange}
+                    onAbort={() => setIsProfileImageOpen(false)}
                   />
                   <button
                     ref={submitButtonReff}
