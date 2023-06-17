@@ -61,6 +61,7 @@ export const bookmarkRouter = createTRPCRouter({
           userId: userId,
         },
         include: {
+          user: true,
           post: {
             include: {
               comments: true,
