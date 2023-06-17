@@ -112,6 +112,11 @@ export const bookmarkRouter = createTRPCRouter({
               id: userId,
             },
           },
+          post: {
+            connect: {
+              id: input.postId,
+            },
+          },
         },
       });
 
