@@ -103,9 +103,15 @@ export const bookmarkRouter = createTRPCRouter({
         throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
       }
       const bookmark = await ctx.prisma.bookmark.create({
+        // @ts-ignore
         data: {
           userId,
           postId: input.postId,
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
         },
       });
 
