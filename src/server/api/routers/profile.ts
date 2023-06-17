@@ -55,4 +55,21 @@ export const profileRouter = createTRPCRouter({
         },
       });
     }),
+  updateProfilePicture: privateProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        profilePicture: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const user = await ctx.prisma.user.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          profileImage: input.profilePicture,
+        },
+      });
+    }),
 });

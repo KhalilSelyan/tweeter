@@ -1,7 +1,6 @@
 import { useUser } from "@clerk/nextjs";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
-import { BiWorld } from "react-icons/bi";
 import { IoImageOutline } from "react-icons/io5";
 import { api } from "~/utils/api";
 import { Web3Storage } from "web3.storage";
