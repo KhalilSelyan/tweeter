@@ -93,7 +93,7 @@ const Home: NextPage<{
     userId: data!.id,
   });
 
-  const followedByIds = following?.map((v) => v.following.id);
+  const followedByIds = followedBy?.map((v) => v.followerId);
 
   const [type, setType] = useAtom(typeAtom);
 
