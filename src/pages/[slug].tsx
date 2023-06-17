@@ -70,6 +70,7 @@ const Home: NextPage<{
       const error = err.data?.zodError?.fieldErrors.content;
       if (error && error[0]) toast.error(error[0]);
       else toast.error("Something went wrong, please try again later");
+      void ctx.follow.invalidate();
     },
   });
   const { mutate: removeFollow } = api.follow.delete.useMutation({
@@ -80,6 +81,7 @@ const Home: NextPage<{
       const error = err.data?.zodError?.fieldErrors.content;
       if (error && error[0]) toast.error(error[0]);
       else toast.error("Something went wrong, please try again later");
+      void ctx.follow.invalidate();
     },
   });
 
@@ -253,7 +255,7 @@ const Home: NextPage<{
             {user.id !== data.id && (
               <div
                 onClick={() => {
-                  if (followedByIds?.includes(user.id)) {
+                  if (!followedByIds?.includes(user.id)) {
                     addFollow({
                       followedUserId: data.id,
                     });
@@ -265,7 +267,7 @@ const Home: NextPage<{
                 }}
                 className="flex cursor-pointer items-center rounded-md bg-blue-500 px-4 py-1 text-sm text-white"
               >
-                {followedByIds?.includes(user.id) ? (
+                {!followedByIds?.includes(user.id) ? (
                   <>
                     <IoPersonAddSharp className="mr-2 inline-block" />
                     <div>Follow</div>
