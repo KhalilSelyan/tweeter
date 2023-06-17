@@ -105,8 +105,8 @@ export const bookmarkRouter = createTRPCRouter({
       const bookmark = await ctx.prisma.bookmark.create({
         // @ts-ignore
         data: {
-          userId,
-          postId: input.postId,
+          // userId,
+          // postId: input.postId,
           user: {
             connect: {
               id: userId,
