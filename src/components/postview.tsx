@@ -151,7 +151,7 @@ export const PostView = (props: PostWithUser) => {
 
   const { data: likesArray, isLoading: arrayLoading } =
     api.likes.likesByUserId.useQuery({
-      userId: post.pauthorId,
+      userId: user!.id,
     });
 
   const { data: bookMarkList, isLoading: bookmarkLoading } =
@@ -231,8 +231,7 @@ export const PostView = (props: PostWithUser) => {
         </div>
         <div
           onClick={() => {
-            bookMarkList?.postIds.includes(post.id) &&
-            bookMarkList.userIds.includes(user!.id)
+            bookMarkList?.postIds.includes(post.id)
               ? removeBookMark({
                   userId: user!.id,
                   postId: post.id,
@@ -244,8 +243,7 @@ export const PostView = (props: PostWithUser) => {
           }}
           className="flex h-10 grow cursor-pointer items-center justify-center rounded-xl hover:bg-gray-100"
         >
-          {bookMarkList?.postIds.includes(post.id) &&
-          bookMarkList.userIds.includes(user!.id) ? (
+          {bookMarkList?.postIds.includes(post.id) ? (
             <BsFillBookmarkFill className="h-5 w-5" />
           ) : (
             <BsBookmark className="h-5 w-5" />
