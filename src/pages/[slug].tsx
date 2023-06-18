@@ -106,6 +106,7 @@ const Home: NextPage<{
     api.profile.updateProfilePicture.useMutation({
       onSuccess: () => {
         void ctx.profile.getUserByUserName.invalidate();
+        user?.reload();
       },
       onError: (err) => {
         const error = err.data?.zodError?.fieldErrors.content;
