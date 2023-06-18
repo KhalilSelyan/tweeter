@@ -173,7 +173,7 @@ const Home: NextPage<{
         <div className="flex flex-col border-slate-400">
           <img
             src="https://i.pinimg.com/originals/4d/d5/85/4dd585d3e8a1a6b23f9a54e5a1076c8b.jpg"
-            alt="Picture of the author"
+            alt="Banner Image"
             className="h-56 w-full object-cover md:h-[28rem]"
           />
           <dialog
@@ -270,12 +270,14 @@ const Home: NextPage<{
 
           {/* profile box */}
           <div className="relative mx-4 -mt-4 flex h-64 flex-col items-center justify-center gap-y-2 rounded-xl bg-white pt-16 md:mx-0 md:h-80 md:pt-32">
-            <AiFillEdit
-              onClick={() => {
-                setIsProfileImageOpen(true);
-              }}
-              className="absolute -top-16 right-28 z-10 mr-2 mt-2 h-6 w-6 cursor-pointer rounded-md bg-black p-1 text-white md:-top-32 md:right-96 md:h-6 md:w-6 "
-            />
+            {data.id === user.id && (
+              <AiFillEdit
+                onClick={() => {
+                  setIsProfileImageOpen(true);
+                }}
+                className="absolute -top-16 right-28 z-10 mr-2 mt-2 h-6 w-6 cursor-pointer rounded-md bg-black p-1 text-white md:-top-32 md:right-96 md:h-6 md:w-6 "
+              />
+            )}
             <img
               src={data.profileImageUrl}
               alt="Picture of the author"
