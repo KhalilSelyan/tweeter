@@ -61,7 +61,7 @@ const Twitbox = () => {
 
   // console.log(ipfsUrl);
 
-  if (!user) return null;
+  if (!user) return <div />;
   return (
     <div
       className={` ${
